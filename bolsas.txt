@@ -1,4 +1,0 @@
-Bolsa:Academica    550 23/12/2004  26/12/2024
-    Aluno:Jose Danilo Santos Do Nascimento  Matricula:12983   Curso:Tecnologia Da Informação CPF: 108.874.983-78
-
-    26/12/2024
