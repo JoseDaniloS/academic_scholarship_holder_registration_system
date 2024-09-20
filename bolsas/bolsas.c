@@ -3,28 +3,17 @@
 #include <stdio.h>
 #include "bolsas.h"
 
-struct data{
-    int dia;
-    int mes;
-    int ano;
-};
-
-struct bolsa{
-    char nome_bolsa[100];
-    float valor_mensal;
-    Data inicio;
-    Data termino;
-    Bolsista * bolsistas;
-    Bolsa * proxima_bolsa;
-};
-
+//função para adicionar uma nova bolsa na lista
 Bolsa * adiciona_bolsa(char * nome_bolsa, float valor_mensal, Bolsa * bolsas){
+
+    //aloca a memoria de uma nova bolsa
     Bolsa * nova_bolsa = (Bolsa*)malloc(sizeof(Bolsa));
     if(nova_bolsa ==  NULL){
         printf("Memoria Insuficiente!\n");
         exit(1);
     }
     
+    //adiciona as informaçoes na bolsa
     strcpy(nova_bolsa->nome_bolsa, nome_bolsa);
     nova_bolsa->valor_mensal = valor_mensal;
     nova_bolsa->bolsistas = NULL;
@@ -34,7 +23,7 @@ Bolsa * adiciona_bolsa(char * nome_bolsa, float valor_mensal, Bolsa * bolsas){
 
     //a nova bolsa aponta para a lista existente de bolsas
     nova_bolsa->proxima_bolsa = bolsas;
-
+    printf("%s Adicionada com sucesso!\n", nome_bolsa);
     //retorna a nova cabeça da lista
     return nova_bolsa;
 }
@@ -74,6 +63,7 @@ Bolsa * busca_bolsa(char * nome_bolsa, Bolsa * bolsas){
     }
 }
 
+//funçao para consultar as bolsas disponiveis
 void consultar_bolsas_disponiveis(Bolsa * bolsas){
 
     //caso não exista bolsas cadastradas

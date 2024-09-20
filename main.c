@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "System/system.h"
+#include "./System/system.h"
 
 int main(void){
     int opcao;
@@ -15,26 +15,32 @@ int main(void){
             break;
         case 2:
             printf("Adicionando Bolsista...\n");
+            preenche_bolsista(&bolsas);
             break;
         case 3:
             printf("Excluindo Bolsista...\n");
+            auxiliar_excluir_bolsista_por_nome(&bolsas);
             break;
         case 4:
-            printf("Listando todos os bolsistas cadastrados...\n");
+            printf("Excluindo bolsa...\n");
             break;
         case 5:
-            printf("Buscando Bolsista...\n");
+            printf("Listando todos os bolsistas cadastrados...\n");
+            auxiliar_listar_bolsistas(&bolsas);
             break;
         case 6:
-            printf("Editando Dados do Bolsista...\n");
+            printf("Buscando Bolsista...\n");
             break;
         case 7:
-            printf("Consultando Dados do Bolsista...\n");
+            printf("Editando Dados do Bolsista...\n");
             break;
         case 8:
-            printf("Consultando as Bolsas Disponiveis...\n");
+            printf("Consultando Dados do Bolsista...\n");
             break;
         case 9:
+            printf("Consultando as Bolsas Disponiveis...\n");
+            break;
+        case 10:
             printf("Saindo...\n");
             exit(1);
             break;

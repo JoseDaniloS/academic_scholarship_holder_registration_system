@@ -1,19 +1,16 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
-#include "System/system.h"
-
-struct bolsista{
-    char nome_completo[100];
-    long int matricula;
-    char curso[50];
-    long int CPF;
-    Bolsa * bolsa_associada;
-    Bolsista * proximo_bolsista;
-};
+#include "bolsistas.h"
 
 //função para adicionar um bolsista em uma bolsa disponivel
-void adiciona_bolsista(char * nome_bolsa, char * nome_bolsista, long int matricula, char * curso, long int CPF){
+void adiciona_bolsista(Bolsa * bolsas ,char * nome_bolsa, char * nome_bolsista, long int matricula, char * curso, long int CPF){
+    //busca pela bolsa na lista de bolsas cadastradas
+    Bolsa * bolsa_encontrada = busca_bolsa(nome_bolsa, bolsas);
+    if(bolsa_encontrada == NULL){
+        printf("Bolsa nao encontrada!\n");
+        return;
+    }
     //aloca a memoria para um novo bolsista
     Bolsista * novo_bolsista = (Bolsista*)malloc(sizeof(Bolsista));
     if(novo_bolsista == NULL){
@@ -27,7 +24,9 @@ void adiciona_bolsista(char * nome_bolsa, char * nome_bolsista, long int matricu
     novo_bolsista->CPF = CPF;
     novo_bolsista->matricula = matricula;
 
-    
+    novo_bolsista->bolsa_associada = bolsa_encontrada;  // relaciona a bolsa ao bolsista
+    novo_bolsista->proximo_bolsista = bolsa_encontrada->bolsistas;
+    bolsa_encontrada->bolsistas = novo_bolsista;  // atualiza a lista de bolsistas na bolsa
 
     printf("Bolsista '%s' adicionado a bolsa '%s' com sucesso!\n", nome_bolsista, nome_bolsa);
     
@@ -46,7 +45,7 @@ Bolsista * busca_bolsista_por_nome(Bolsista * bolsistas, char * nome_bolsista){
     while(count != NULL && strcmp(count->nome_completo, nome_bolsista) != 0){
         count = count->proximo_bolsista;
     }
-
+    
     //caso o bolsista esteja cadastrado na bolsa
     if(strcmp(count->nome_completo, nome_bolsista) == 0){
         return count;
@@ -60,35 +59,50 @@ Bolsista * busca_bolsista_por_nome(Bolsista * bolsistas, char * nome_bolsista){
 }
 
 //função para excluir um bolsista de uma bolsa
-void excluir_Bolsista_por_nome(Bolsista * bolsistas, char * nome_bolsista){
-    if(bolsistas == NULL){
-        printf("Nenhum bolsista cadastrado com esse nome!\n");
+void excluir_Bolsista_por_nome(Bolsa * bolsas, char * nome_bolsista){
+    if(bolsas == NULL){
+        printf("Nenhuma Bolsa Cadastrada!\n");
         return;
     }
 
-    Bolsista * count = bolsistas;
+    Bolsa * count = bolsas;
+    Bolsista * contador_de_bolsistas = NULL;
     Bolsista * ant = NULL;
-    while(count != NULL && strcmp(count->nome_completo, nome_bolsista) != 0){
-        ant = count;
-        count = count->proximo_bolsista;
+    //percorrer todas as bolsas ate encontrar o bolsista
+    while(count != NULL){
+
+        contador_de_bolsistas = count->bolsistas;
+        ant = NULL;
+
+        //percorre todos os bolsistas ate encontrar o que vai excluir
+        while(contador_de_bolsistas != NULL){
+
+            //encontrou o bolsista para remover
+            if(strcmp(contador_de_bolsistas->nome_completo, nome_bolsista) == 0){
+
+                //caso seja o primeiro bolsista
+                if(ant == NULL){
+                    count->bolsistas = contador_de_bolsistas->proximo_bolsista;
+                }
+                //caso seja algum bolsista apos o primeiro
+                else{
+                    ant->proximo_bolsista = contador_de_bolsistas->proximo_bolsista;
+                }
+                printf("Bolsista '%s' removido com sucesso!\n", nome_bolsista);
+                free(contador_de_bolsistas);
+                return;
+            }
+
+            //avança para o proximo bolsista
+            ant = contador_de_bolsistas;
+            contador_de_bolsistas = contador_de_bolsistas->proximo_bolsista;
+        }
+        
+        //avança para proxima bolsa
+        count = count->proxima_bolsa;
     }
 
-    //caso não encontre o bolsista
-    if(count == NULL){
-        printf("Bolsista '%s' nao encontrado!\n", nome_bolsista);
-        return;
-    }
-    //caso o bolsista seja o primeiro da lista
-    if(ant == NULL){
-        bolsistas = count->proximo_bolsista;
-    }
-    //atualiza a cabeça da lista
-    else{
-        ant->proximo_bolsista = count->proximo_bolsista;
-    }
-    //libera a memoria do bolsista
-    free(count);
-    printf("Bolsista '%s' excluido com sucesso!\n", nome_bolsista);
+    printf("Bolsista '%s' nao encontrado!\n", nome_bolsista);
 }
 
 void listar_bolsistas(Bolsista * bolsistas){
