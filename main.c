@@ -1,5 +1,6 @@
 #include <stdio.h>
-#include "./System/system.h"
+#include <stdlib.h>
+#include "./sistema/system.h"
 
 int main(void){
     int opcao;
@@ -19,7 +20,7 @@ int main(void){
             break;
         case 3:
             printf("Excluindo Bolsista...\n");
-            auxiliar_excluir_bolsista_por_nome(&bolsas);
+            excluir_bolsista_por_nome(&bolsas);
             break;
         case 4:
             printf("Excluindo bolsa...\n");

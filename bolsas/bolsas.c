@@ -3,6 +3,21 @@
 #include <stdio.h>
 #include "bolsas.h"
 
+struct data{
+    int dia;
+    int mes;
+    int ano;
+};
+
+struct bolsa{
+    char nome_bolsa[100];
+    float valor_mensal;
+    Data inicio;
+    Data termino;
+    Bolsista * bolsistas;
+    Bolsa * proxima_bolsa;
+};
+
 //função para adicionar uma nova bolsa na lista
 Bolsa * adiciona_bolsa(char * nome_bolsa, float valor_mensal, Bolsa * bolsas){
 
@@ -26,6 +41,40 @@ Bolsa * adiciona_bolsa(char * nome_bolsa, float valor_mensal, Bolsa * bolsas){
     printf("%s Adicionada com sucesso!\n", nome_bolsa);
     //retorna a nova cabeça da lista
     return nova_bolsa;
+}
+
+//função para excluir um bolsista de uma bolsa
+void excluir_bolsista_por_nome(Bolsa ** bolsas){
+    if(*bolsas == NULL){
+        printf("Nenhuma Bolsa Cadastrada!\n");
+        return;
+    }
+    char nome_bolsista[100];
+    printf("Informe o nome do bolsista:\n");
+    scanf(" %[^\n]", nome_bolsista);
+    Bolsa * count = *bolsas;
+    //percorrer todas as bolsas ate encontrar o bolsista
+    while(count != NULL){
+
+        auxiliar_excluir_bolsista_por_nome(&count->bolsistas, nome_bolsista);
+        count = count->proxima_bolsa;
+    }
+
+    printf("Bolsista '%s' nao encontrado!\n", nome_bolsista);
+}
+
+void preenche_bolsa(Bolsa ** bolsas){
+
+    char nome_bolsa[100];
+    float valor_mensal;
+    printf("Informe o nome da bolsa:\n");
+    scanf(" %[^\n]", nome_bolsa);
+    printf("Infomre o valor mensal:\n");
+    scanf("%f", & valor_mensal);
+
+    *bolsas = adiciona_bolsa(nome_bolsa,valor_mensal, *bolsas);
+
+   
 }
 
 //funçao para adicionar datas de incio e termino da bolsa
@@ -84,4 +133,45 @@ void consultar_bolsas_disponiveis(Bolsa * bolsas){
         count = count->proxima_bolsa;
     }
 
+}
+
+void auxiliar_listar_bolsistas(Bolsa ** bolsas){
+    Bolsa * count = *bolsas;
+    int contador_de_bolsas = 1;
+    while(count != NULL){
+        printf("\n\n%d- Bolsa:\n", contador_de_bolsas);
+        printf("Tipo: %s\n", count->nome_bolsa);
+        printf("Valor Mensal: %.1f\n", count->valor_mensal);
+        printf("Data de Inicio: %d/%d/%d\n", count->inicio.dia, count->inicio.mes, count->inicio.ano);
+        printf("Data de Termino: %d/%d/%d\n\n", count->termino.dia, count->termino.mes, count->termino.ano);
+
+        //listar bolsistas da bolsa atual
+        listar_bolsistas(count->bolsistas);
+
+        //avancar para proxima bolsa
+        count = count->proxima_bolsa;
+        contador_de_bolsas++;
+    }
+
+    if(contador_de_bolsas == 1){
+        printf("Nenhuma bolsa cadastrada!\n");
+    }
+}
+
+void preenche_bolsista(Bolsa ** bolsas){
+    char nome_bolsa[100];
+    Bolsa * bolsa_encontrada = NULL;
+
+    printf("Informe a Bolsa que o Aluno vai ser Vinculado:\n");
+    scanf(" %[^\n]", nome_bolsa);
+
+    //busca a bolsa que o bolsista vai ser adicionado
+    bolsa_encontrada = busca_bolsa(nome_bolsa, *bolsas);
+
+    if(bolsa_encontrada != NULL){
+        adiciona_bolsista(&bolsa_encontrada->bolsistas, nome_bolsa);
+    }
+    else{
+        printf("Bolsa '%s' nao encontrada!\n", nome_bolsa);
+    }
 }
