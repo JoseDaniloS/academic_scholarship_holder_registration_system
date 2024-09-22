@@ -45,6 +45,7 @@ Bolsa * adiciona_bolsa(char * nome_bolsa, float valor_mensal, Bolsa * bolsas){
 
 //função para excluir um bolsista de uma bolsa
 void excluir_bolsista_por_nome(Bolsa ** bolsas){
+
     if(*bolsas == NULL){
         printf("Nenhuma Bolsa Cadastrada!\n");
         return;
@@ -52,15 +53,75 @@ void excluir_bolsista_por_nome(Bolsa ** bolsas){
     char nome_bolsista[100];
     printf("Informe o nome do bolsista:\n");
     scanf(" %[^\n]", nome_bolsista);
+
     Bolsa * count = *bolsas;
+    int bolsista_excluido = 0;
     //percorrer todas as bolsas ate encontrar o bolsista
     while(count != NULL){
 
-        auxiliar_excluir_bolsista_por_nome(&count->bolsistas, nome_bolsista);
+        if(auxiliar_excluir_bolsista_por_nome(&count->bolsistas, nome_bolsista)){
+            bolsista_excluido = 1;
+        }
         count = count->proxima_bolsa;
     }
 
-    printf("Bolsista '%s' nao encontrado!\n", nome_bolsista);
+    if(bolsista_excluido == 0){
+         printf("Bolsista '%s' nao encontrado!\n", nome_bolsista);
+    }
+}
+
+//função para buscar um bolsista
+void menu_busca_bolsista(Bolsa ** bolsas){
+    int opcao = 0;
+    do{
+        printf("1 - Buscar Bolsista por Nome:\n");
+        printf("2 - Buscar Bolsista por Matricula:\n");
+        printf("3 - Sair..\n");
+        scanf("%d", &opcao);
+        switch (opcao){
+        case 1:
+            buscar_bolsista_por_nome(bolsas);
+            break;
+        case 2:
+            //função para buscar bolsista por matricula
+            break;
+        default:
+            printf("Opcao Invalida!");
+            break;
+        }
+    }while(opcao != 3);
+    return;
+}
+
+//função para buscar um bolsista por nome
+void buscar_bolsista_por_nome(Bolsa ** bolsas){
+    char nome_bolsista[100];
+
+    //caso nao tenha nenhuma bolsa cadastrada
+    if(*bolsas == NULL){
+        printf("Nenhuma Bolsa Cadastrada!\n");
+        return;
+    }
+
+    printf("Informe o nome do Bolsista:\n");
+    scanf(" %[^\n]", nome_bolsista);
+
+    Bolsa * count = *bolsas;
+    int verificador = 0;
+
+    while(count != NULL){
+        verificador = auxiliar_buscar_bolsista_por_nome(count->bolsistas, nome_bolsista);
+        count = count->proxima_bolsa;
+    }
+    //caso nao encontre o bolsista
+    if(verificador == 0){
+        printf("Bolsista nao encontrado!\n");
+        return;
+    }
+    //caso encontre retorna para o menu
+    else{
+        return;
+    }    
 }
 
 void preenche_bolsa(Bolsa ** bolsas){
@@ -69,7 +130,7 @@ void preenche_bolsa(Bolsa ** bolsas){
     float valor_mensal;
     printf("Informe o nome da bolsa:\n");
     scanf(" %[^\n]", nome_bolsa);
-    printf("Infomre o valor mensal:\n");
+    printf("Informe o valor mensal:\n");
     scanf("%f", & valor_mensal);
 
     *bolsas = adiciona_bolsa(nome_bolsa,valor_mensal, *bolsas);
@@ -82,7 +143,7 @@ void adiciona_data(Bolsa * bolsa){
     printf("Informe a data de inicio\nFormato: DD MM AAAA\n");
     scanf("%d %d %d", &bolsa->inicio.dia, &bolsa->inicio.mes, &bolsa->inicio.ano);
 
-    printf("Informe a data de termino\n Formato: DD MM AAAA\n");
+    printf("Informe a data de termino\nFormato: DD MM AAAA\n");
     scanf("%d %d %d", &bolsa->termino.dia, &bolsa->termino.mes, &bolsa->termino.ano);
 }
 
@@ -174,4 +235,69 @@ void preenche_bolsista(Bolsa ** bolsas){
     else{
         printf("Bolsa '%s' nao encontrada!\n", nome_bolsa);
     }
+}
+
+//funçao para escanear todas as bolsas armazenadas no banco de dado
+void ler_bolsa_arquivo(FILE ** banco_de_dados, Bolsa ** bolsas){
+    char linha[100];
+    Bolsa * nova_bolsa = NULL;
+    
+    while(fgets(linha,sizeof(linha),*banco_de_dados) != NULL){
+        //verifica se a linha escaneada contem a palavra Bolsa
+        if(strstr(linha, "BOLSA:")){
+
+            nova_bolsa = (Bolsa*)malloc(sizeof(Bolsa));
+            if(nova_bolsa == NULL){
+                printf("Memoria Insuficiente!\n");
+                exit(1);
+            }
+            nova_bolsa->proxima_bolsa = *bolsas;
+            *bolsas = nova_bolsa;
+            nova_bolsa->bolsistas = NULL;
+        }
+
+        //escaneia todas as informações das bolsas
+        else if (nova_bolsa != NULL){
+            
+            if(strstr(linha, "Tipo:")){
+                sscanf(linha,"Tipo: %[^\n]", nova_bolsa->nome_bolsa);
+            }
+            else if(strstr(linha, "Valor Mensal:")){
+                sscanf(linha, "Valor Mensal: %f", &nova_bolsa->valor_mensal);
+            }
+            else if(strstr(linha, "Data de Inicio:")){
+                sscanf(linha, "Data de Inicio: %d/%d/%d", &nova_bolsa->inicio.dia, &nova_bolsa->inicio.mes, &nova_bolsa->inicio.ano);
+            }
+            else if(strstr(linha, "Data de Termino:")){
+                sscanf(linha, "Data de Termino: %d/%d/%d", &nova_bolsa->termino.dia, &nova_bolsa->termino.mes, &nova_bolsa->termino.ano);
+            }
+
+            //ler os dados dos bolsistas
+            else if(strstr(linha, "ALUNOS:")){
+                nova_bolsa->bolsistas = ler_bolsista_arquivo(banco_de_dados, nova_bolsa->bolsistas);
+            }
+        }
+    }
+}
+
+//funçao para armazenar uma bolsa e seus respectivos campos
+void insere_bolsa_arquivo(FILE ** banco_de_dados, Bolsa ** bolsas){
+    Bolsa * count = *bolsas;
+    if(*bolsas == NULL){
+        return;
+    }
+    //percorre todas as bolsas armazenando suas informações no banco de dados
+    while(count != NULL){
+        fprintf(*banco_de_dados, "===============================\n\n");
+        fprintf(*banco_de_dados, "BOLSA:\nTipo: %s\n", count->nome_bolsa);
+        fprintf(*banco_de_dados, "Valor Mensal: %.1f\n", count->valor_mensal);
+        fprintf(*banco_de_dados, "Data de Inicio: %02d/%02d/%d\n", count->inicio.dia, count->inicio.mes, count->inicio.ano);
+        fprintf(*banco_de_dados, "Data de Termino: %02d/%02d/%d\n\n", count->termino.dia, count->termino.mes, count->termino.ano);
+
+        //insere os bolsistas associados à bolsa no arquivo
+        insere_bolsista_arquivo(banco_de_dados,count->bolsistas);
+
+        fprintf(*banco_de_dados, "===============================\n\n");
+        count = count->proxima_bolsa;
+    }    
 }

@@ -1,11 +1,13 @@
-BOLSA:
-Tipo:Academica
-Valor Mensal:550
-Data de Inicio:23/12/2004
-Data de Termino:26/12/2024
+===============================
 
-ALUNOS:
-Aluno:Jose Danilo Santos Do Nascimento
-Matricula:12983
-Curso:Tecnologia Da Informação
-CPF: 108.874.983-78
+BOLSA:
+Tipo: Academica
+Valor Mensal: 550.0
+Data de Inicio: 23/12/2004
+Data de Termino: 23/11/2005
+
+BOLSISTAS:
+Nenhum bolsista cadastrado!
+
+===============================
+

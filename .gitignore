@@ -1,0 +1,59 @@
+# Ignore arquivos de compilação
+*.o
+*.a
+*.so
+*.exe
+*.out
+*.obj
+*.dll
+*.lib
+*.lo
+*.la
+*.class
+
+# Ignore diretórios de compilação
+build/
+bin/
+obj/
+Debug/
+Release/
+dist/
+
+# Arquivos de backup
+*~
+*.swp
+*.swo
+*.bak
+*.tmp
+*.log
+
+# Diretórios de IDEs
+.vscode/
+.idea/
+*.code-workspace
+*.sln
+*.vcxproj*
+*.csproj
+*.suo
+*.ncb
+*.user
+*.cache
+*.cproject
+*.project
+
+# Arquivos de configuração
+Makefile
+CMakeFiles/
+CMakeCache.txt
+CMakeScripts/
+compile_commands.json
+cmake_install.cmake
+CTestTestfile.cmake
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+
+# Arquivos de dependência gerados automaticamente
+*.d
+*.dep
