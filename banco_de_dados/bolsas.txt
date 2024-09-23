@@ -1,10 +1,25 @@
 ===============================
+BOLSA:
+Tipo: Esporte
+Valor Mensal: 400.0
+Data de Inicio: 22/22/2222
+Data de Termino: 22/22/2222
 
+BOLSISTAS:
+Bolsista: Pedro Arthur
+Matricula: 2219873
+Curso: Ciencia & Tecnologia
+CPF:129873
+Bolsa Associada: Esporte
+
+===============================
+
+===============================
 BOLSA:
 Tipo: Academica
 Valor Mensal: 550.0
-Data de Inicio: 23/12/2004
-Data de Termino: 23/11/2005
+Data de Inicio: 22/22/2000
+Data de Termino: 22/22/2000
 
 BOLSISTAS:
 Nenhum bolsista cadastrado!

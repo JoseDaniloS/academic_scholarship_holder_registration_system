@@ -8,7 +8,7 @@ typedef struct data Data;
 
 typedef struct bolsa Bolsa;
 
-Bolsa *adiciona_bolsa(char *nome_bolsa, float valor_mensal, Bolsa *bolsas);
+Bolsa *adiciona_bolsa(char *nome_bolsa, float valor_mensal, Bolsa ** bolsas);
 
 void excluir_bolsista_por_nome(Bolsa ** bolsas);
 

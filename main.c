@@ -16,6 +16,7 @@ int main(void){
     FILE * arquivo = Verificacao("./banco_de_dados/bolsas.txt", "rt");
     ler_bolsa_arquivo(&arquivo, &bolsas);
     fclose(arquivo);
+    
     do{
         menu_de_opcoes();
         scanf("%d", &opcao);

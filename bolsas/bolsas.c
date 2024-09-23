@@ -3,6 +3,9 @@
 #include <stdio.h>
 #include "bolsas.h"
 
+#define SUCESSO 1
+#define FALHA 0
+
 struct data{
     int dia;
     int mes;
@@ -19,7 +22,7 @@ struct bolsa{
 };
 
 //função para adicionar uma nova bolsa na lista
-Bolsa * adiciona_bolsa(char * nome_bolsa, float valor_mensal, Bolsa * bolsas){
+Bolsa * adiciona_bolsa(char * nome_bolsa, float valor_mensal, Bolsa ** bolsas){
 
     //aloca a memoria de uma nova bolsa
     Bolsa * nova_bolsa = (Bolsa*)malloc(sizeof(Bolsa));
@@ -32,15 +35,31 @@ Bolsa * adiciona_bolsa(char * nome_bolsa, float valor_mensal, Bolsa * bolsas){
     strcpy(nova_bolsa->nome_bolsa, nome_bolsa);
     nova_bolsa->valor_mensal = valor_mensal;
     nova_bolsa->bolsistas = NULL;
+    nova_bolsa->proxima_bolsa = NULL;
 
-    //Adiciona datas de inicio e termino da bolsa
+    // Adiciona datas de início e término da bolsa
     adiciona_data(nova_bolsa);
 
     //a nova bolsa aponta para a lista existente de bolsas
-    nova_bolsa->proxima_bolsa = bolsas;
+    nova_bolsa->proxima_bolsa = *bolsas;
     printf("%s Adicionada com sucesso!\n", nome_bolsa);
     //retorna a nova cabeça da lista
     return nova_bolsa;
+}
+
+
+void preenche_bolsa(Bolsa ** bolsas){
+
+    char nome_bolsa[100];
+    float valor_mensal;
+    printf("Informe o nome da bolsa:\n");
+    scanf(" %[^\n]", nome_bolsa);
+    printf("Informe o valor mensal:\n");
+    scanf("%f", & valor_mensal);
+
+    *bolsas = adiciona_bolsa(nome_bolsa,valor_mensal, bolsas);
+
+   
 }
 
 //função para excluir um bolsista de uma bolsa
@@ -55,17 +74,17 @@ void excluir_bolsista_por_nome(Bolsa ** bolsas){
     scanf(" %[^\n]", nome_bolsista);
 
     Bolsa * count = *bolsas;
-    int bolsista_excluido = 0;
+    int bolsista_excluido = FALHA;
     //percorrer todas as bolsas ate encontrar o bolsista
     while(count != NULL){
 
         if(auxiliar_excluir_bolsista_por_nome(&count->bolsistas, nome_bolsista)){
-            bolsista_excluido = 1;
+            bolsista_excluido = SUCESSO;
         }
         count = count->proxima_bolsa;
     }
 
-    if(bolsista_excluido == 0){
+    if(bolsista_excluido == FALHA){
          printf("Bolsista '%s' nao encontrado!\n", nome_bolsista);
     }
 }
@@ -107,14 +126,14 @@ void buscar_bolsista_por_nome(Bolsa ** bolsas){
     scanf(" %[^\n]", nome_bolsista);
 
     Bolsa * count = *bolsas;
-    int verificador = 0;
+    int verificador = FALHA;
 
     while(count != NULL){
         verificador = auxiliar_buscar_bolsista_por_nome(count->bolsistas, nome_bolsista);
         count = count->proxima_bolsa;
     }
     //caso nao encontre o bolsista
-    if(verificador == 0){
+    if(verificador == FALHA){
         printf("Bolsista nao encontrado!\n");
         return;
     }
@@ -122,20 +141,6 @@ void buscar_bolsista_por_nome(Bolsa ** bolsas){
     else{
         return;
     }    
-}
-
-void preenche_bolsa(Bolsa ** bolsas){
-
-    char nome_bolsa[100];
-    float valor_mensal;
-    printf("Informe o nome da bolsa:\n");
-    scanf(" %[^\n]", nome_bolsa);
-    printf("Informe o valor mensal:\n");
-    scanf("%f", & valor_mensal);
-
-    *bolsas = adiciona_bolsa(nome_bolsa,valor_mensal, *bolsas);
-
-   
 }
 
 //funçao para adicionar datas de incio e termino da bolsa
@@ -187,8 +192,8 @@ void consultar_bolsas_disponiveis(Bolsa * bolsas){
     while(count != NULL){
         printf("Bolsa: %s\n", count->nome_bolsa);
         printf("Valor Mensal: %.1f\n", count->valor_mensal);
-        printf("Data de inicio: %d/%d/%d\n", count->inicio.dia, count->inicio.mes, count->inicio.ano);
-        printf("Data de Termino:%d/%d/%d\n", count->termino.dia, count->termino.mes, count->termino.ano);
+        printf("Data de inicio: %02d/%02d/%04d\n", count->inicio.dia, count->inicio.mes, count->inicio.ano);
+        printf("Data de Termino:%02d/%02d/%04d\n", count->termino.dia, count->termino.mes, count->termino.ano);
         printf("Quantidade de Bolsistas Cadastrados: %d\n", quantitativo_bolsistas(count->bolsistas));
         printf("\n\n");
         count = count->proxima_bolsa;
@@ -203,8 +208,8 @@ void auxiliar_listar_bolsistas(Bolsa ** bolsas){
         printf("\n\n%d- Bolsa:\n", contador_de_bolsas);
         printf("Tipo: %s\n", count->nome_bolsa);
         printf("Valor Mensal: %.1f\n", count->valor_mensal);
-        printf("Data de Inicio: %d/%d/%d\n", count->inicio.dia, count->inicio.mes, count->inicio.ano);
-        printf("Data de Termino: %d/%d/%d\n\n", count->termino.dia, count->termino.mes, count->termino.ano);
+        printf("Data de Inicio: %02d/%02d/%04d\n", count->inicio.dia, count->inicio.mes, count->inicio.ano);
+        printf("Data de Termino: %02d/%02d/%04d\n\n", count->termino.dia, count->termino.mes, count->termino.ano);
 
         //listar bolsistas da bolsa atual
         listar_bolsistas(count->bolsistas);
@@ -219,6 +224,7 @@ void auxiliar_listar_bolsistas(Bolsa ** bolsas){
     }
 }
 
+//função para preencher dados de um bolsista
 void preenche_bolsista(Bolsa ** bolsas){
     char nome_bolsa[100];
     Bolsa * bolsa_encontrada = NULL;
@@ -273,7 +279,7 @@ void ler_bolsa_arquivo(FILE ** banco_de_dados, Bolsa ** bolsas){
             }
 
             //ler os dados dos bolsistas
-            else if(strstr(linha, "ALUNOS:")){
+            else if(strstr(linha, "BOLSISTAS:")){
                 nova_bolsa->bolsistas = ler_bolsista_arquivo(banco_de_dados, nova_bolsa->bolsistas);
             }
         }
@@ -288,11 +294,11 @@ void insere_bolsa_arquivo(FILE ** banco_de_dados, Bolsa ** bolsas){
     }
     //percorre todas as bolsas armazenando suas informações no banco de dados
     while(count != NULL){
-        fprintf(*banco_de_dados, "===============================\n\n");
+        fprintf(*banco_de_dados, "===============================\n");
         fprintf(*banco_de_dados, "BOLSA:\nTipo: %s\n", count->nome_bolsa);
         fprintf(*banco_de_dados, "Valor Mensal: %.1f\n", count->valor_mensal);
-        fprintf(*banco_de_dados, "Data de Inicio: %02d/%02d/%d\n", count->inicio.dia, count->inicio.mes, count->inicio.ano);
-        fprintf(*banco_de_dados, "Data de Termino: %02d/%02d/%d\n\n", count->termino.dia, count->termino.mes, count->termino.ano);
+        fprintf(*banco_de_dados, "Data de Inicio: %02d/%02d/%04d\n", count->inicio.dia, count->inicio.mes, count->inicio.ano);
+        fprintf(*banco_de_dados, "Data de Termino: %02d/%02d/%04d\n\n", count->termino.dia, count->termino.mes, count->termino.ano);
 
         //insere os bolsistas associados à bolsa no arquivo
         insere_bolsista_arquivo(banco_de_dados,count->bolsistas);
