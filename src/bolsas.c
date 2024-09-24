@@ -24,7 +24,6 @@ struct bolsa
     Bolsa *proxima_bolsa;
 };
 
-
 void insere_bolsa(Bolsa **bolsas)
 {
 
@@ -75,50 +74,58 @@ void insere_bolsa(Bolsa **bolsas)
     *bolsas = nova_bolsa;
 }
 // função para excluir um bolsista de uma bolsa
-void excluir_bolsista_por_nome(Bolsa ** bolsas){
+void excluir_bolsista_por_nome(Bolsa **bolsas)
+{
 
-    if(bolsa_vazia(*bolsas) == FALHA){
+    if (bolsa_vazia(*bolsas) == FALHA)
+    {
         return;
     }
     char nome_bolsista[40];
     printf("Informe o nome do bolsista:\n");
     scanf(" %[^\n]", nome_bolsista);
 
-    Bolsa * count = *bolsas;
+    Bolsa *count = *bolsas;
     int bolsista_excluido = FALHA;
-    //percorrer todas as bolsas ate encontrar o bolsista
-    while(count != NULL){
+    // percorrer todas as bolsas ate encontrar o bolsista
+    while (count != NULL)
+    {
 
-        if(auxiliar_excluir_bolsista_por_nome(&count->bolsistas, nome_bolsista)){
+        if (auxiliar_excluir_bolsista_por_nome(&count->bolsistas, nome_bolsista))
+        {
             bolsista_excluido = SUCESSO;
         }
         count = count->proxima_bolsa;
     }
 
-    if(bolsista_excluido == FALHA){
-         printf("Bolsista '%s' nao encontrado!\n", nome_bolsista);
+    if (bolsista_excluido == FALHA)
+    {
+        printf("Bolsista '%s' nao encontrado!\n", nome_bolsista);
     }
 }
 
-
 // função para buscar um bolsista
-void menu_busca_bolsista(Bolsa ** bolsas){
+void menu_busca_bolsista(Bolsa **bolsas)
+{
 
-    if(bolsa_vazia(*bolsas) == FALHA){
+    if (bolsa_vazia(*bolsas) == FALHA)
+    {
         return;
     }
 
     char c_numero[2];
     int opcao = 0;
 
-    do{
+    do
+    {
         printf("1 - Buscar Bolsista por Nome:\n");
         printf("2 - Buscar Bolsista por Matricula:\n");
         printf("3 - Sair..\n");
         scanf("%s", c_numero);
         opcao = verifica_inteiro(c_numero);
 
-        switch (opcao){
+        switch (opcao)
+        {
         case 1:
             buscar_bolsista_por_nome(bolsas);
             break;
@@ -132,40 +139,45 @@ void menu_busca_bolsista(Bolsa ** bolsas){
             printf("Opcao Invalida! Por favor, escolha entre 1 e 3.\n");
             break;
         }
-    }while(opcao != 3);
+    } while (opcao != 3);
 
     return;
 }
 
 // função para buscar um bolsista por nome
-void buscar_bolsista_por_nome(Bolsa ** bolsas){
+void buscar_bolsista_por_nome(Bolsa **bolsas)
+{
 
-    //caso nao tenha nenhuma bolsa cadastrada
-    if(bolsa_vazia(*bolsas) == FALHA){
+    // caso nao tenha nenhuma bolsa cadastrada
+    if (bolsa_vazia(*bolsas) == FALHA)
+    {
         return;
     }
 
     char nome_bolsista[40];
-    Bolsista * bolsista_encontrado = NULL;
+    Bolsista *bolsista_encontrado = NULL;
 
     printf("Informe o nome do Bolsista:\n");
     scanf(" %[^\n]", nome_bolsista);
 
-    Bolsa * count = *bolsas;
+    Bolsa *count = *bolsas;
 
-    while(count != NULL){
+    while (count != NULL)
+    {
         bolsista_encontrado = auxiliar_buscar_bolsista_por_nome(count->bolsistas, nome_bolsista);
         count = count->proxima_bolsa;
     }
-    //caso nao encontre o bolsista
-    if(bolsista_encontrado == NULL){
+    // caso nao encontre o bolsista
+    if (bolsista_encontrado == NULL)
+    {
         printf("Bolsista nao encontrado!\n");
         return;
     }
-    //caso encontre retorna para o menu
-    else{
+    // caso encontre retorna para o menu
+    else
+    {
         return;
-    }    
+    }
 }
 
 void buscar_bolsista_por_matricula(Bolsa **bolsas)
@@ -196,8 +208,6 @@ void buscar_bolsista_por_matricula(Bolsa **bolsas)
         return;
     }
 }
-
-
 
 Bolsa *busca_bolsa(char *nome_bolsa, Bolsa *bolsas)
 {
@@ -255,7 +265,7 @@ void consultar_bolsas_disponiveis(Bolsa **bolsas)
     }
 }
 
-//função para listar todos os bolsistas cadastrados em todas as bolsas
+// função para listar todos os bolsistas cadastrados em todas as bolsas
 void auxiliar_listar_bolsistas(Bolsa **bolsas)
 {
     Bolsa *count = *bolsas;
@@ -361,7 +371,8 @@ void ler_bolsa_arquivo(FILE **banco_de_dados, Bolsa **bolsas)
 void insere_bolsa_arquivo(FILE **banco_de_dados, Bolsa **bolsas)
 {
     Bolsa *count = *bolsas;
-    if(bolsa_vazia(*bolsas) == FALHA){
+    if (bolsa_vazia(*bolsas) == FALHA)
+    {
         return;
     }
     // percorre todas as bolsas armazenando suas informações no banco de dados
@@ -387,17 +398,25 @@ void edita_dados_bolsista(Bolsa **bolsas)
 {
     char nome_bolsista[MAX];
     Bolsa *bolsista_encontrado;
+    if(bolsas == NULL || *bolsas == NULL){
+        printf("Não ha bolsas disponiveis.");
+        return;
+    }
     printf("Digite o nome do bolsista que deseja editar: ");
     scanf(" %[^\n]", nome_bolsista);
-    // buscar_bolsista_por_nome(*bolsas);
+    bolsista_encontrado = auxiliar_buscar_bolsista_por_nome(*bolsas, nome_bolsista);
     if (bolsista_encontrado != NULL)
     {
+    
+        
     }
 }
 
-//função para verificar se a lista de bolsas está vazia
-int bolsa_vazia(Bolsa * bolsas){
-    if(bolsas == NULL){
+// função para verificar se a lista de bolsas está vazia
+int bolsa_vazia(Bolsa *bolsas)
+{
+    if (bolsas == NULL)
+    {
         printf("Nao ha bolsas cadastradas!\n");
         return FALHA;
     }
