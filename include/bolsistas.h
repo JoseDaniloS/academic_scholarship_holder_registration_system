@@ -12,7 +12,7 @@ void adiciona_bolsista(Bolsista** bolsistas, char* nome_bolsa);
 
 int verifica_cpf_existente(char* CPF, Bolsista* bolsistas);
 
-int auxiliar_buscar_bolsista_por_nome(Bolsista* bolsistas, char* nome_bolsista);
+Bolsista * auxiliar_buscar_bolsista_por_nome(Bolsista* bolsistas, char* nome_bolsista);
 
 int auxiliar_excluir_bolsista_por_nome(Bolsista** bolsistas, char* nome_bolsista);
 

@@ -52,11 +52,11 @@ void adiciona_bolsista(Bolsista ** bolsistas, char * nome_bolsa){
     *bolsistas = novo_bolsista;
 }
 // função para buscar um bolsista em uma bolsa
-int auxiliar_buscar_bolsista_por_nome(Bolsista * bolsistas, char * nome_bolsista){
+Bolsista * auxiliar_buscar_bolsista_por_nome(Bolsista * bolsistas, char * nome_bolsista){
 
     //caso não exista nenhum bolsista cadastrado na bolsa
     if(bolsistas == NULL){
-        return FALHA;
+        return bolsistas;
     }
 
     //percorre a lista de bolsistas de uma determianda bolsa
@@ -69,14 +69,14 @@ int auxiliar_buscar_bolsista_por_nome(Bolsista * bolsistas, char * nome_bolsista
             printf("Curso: %s\n", count->curso);
             printf("CPF: %s\n", count->CPF);
             printf("Bolsa Associada: %s\n\n", count->bolsa_associada);
-            return SUCESSO;
+            return count;
         }
         count = count->proximo_bolsista;
     }
 
     //caso o bolsista não esteja cadastrado na bolsa
         printf("Bolsista %s nao cadastrado em nenhuma bolsa!\n", nome_bolsista);
-        return FALHA;
+        return bolsistas;
     
 }
 
@@ -103,6 +103,7 @@ int auxiliar_buscar_bolsista_por_matricula(Bolsista *bolsistas, long int matricu
     printf("Bolsista com matricula %ld nao esta cadastrado em nenhuma bolsa!");
     return FALHA;
 }
+
 int auxiliar_excluir_bolsista_por_nome(Bolsista **bolsistas, char *nome_bolsista)
 {
 
