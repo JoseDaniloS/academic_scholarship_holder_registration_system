@@ -6,16 +6,17 @@
 #define FALHA 0
 #define SUCESSO 1
 
-struct bolsista{
-    char nome_completo[100];
+struct bolsista
+{
+    char nome_completo[MAX];
     long int matricula;
     char curso[50];
     char CPF[15];
-    char bolsa_associada[100];
-    struct bolsista * proximo_bolsista;
+    char bolsa_associada[MAX];
+    struct bolsista *proximo_bolsista;
 };
 
-//função para adicionar um bolsista em uma bolsa disponivel
+// função para adicionar um bolsista em uma bolsa disponivel
 void adiciona_bolsista(Bolsista ** bolsistas, char * nome_bolsa){
 
     Bolsista * novo_bolsista = (Bolsista*)malloc(sizeof(Bolsista));
@@ -23,7 +24,7 @@ void adiciona_bolsista(Bolsista ** bolsistas, char * nome_bolsa){
         printf("Memoria Insuficiente!\n");
         exit(1);
     }
-    char nome_bolsista[100], curso[100], CPF[15];
+    char nome_bolsista[70], curso[50], CPF[12];
     long int matricula;
     printf("Informe o Nome:\n");
     scanf(" %[^\n]", nome_bolsista);
@@ -34,8 +35,10 @@ void adiciona_bolsista(Bolsista ** bolsistas, char * nome_bolsa){
     printf("Informe a Matricula:\n");
     scanf("%ld", &matricula);
 
-    printf("Informe o CPF:\n");
-    scanf(" %[^\n]", CPF);
+    do{
+        printf("Informe o CPF(11 digitos):\n");
+        scanf(" %[^\n]", CPF);
+    }while(verifica_cpf_existente(CPF, *bolsistas) == FALHA || verifica_cpf_valido(CPF) == FALHA);
 
     //adicionando as informações ao novo bolsista
     strcpy(novo_bolsista->nome_completo, nome_bolsista);
@@ -48,8 +51,7 @@ void adiciona_bolsista(Bolsista ** bolsistas, char * nome_bolsa){
     novo_bolsista->proximo_bolsista = *bolsistas;
     *bolsistas = novo_bolsista;
 }
-
-//função para buscar um bolsista em uma bolsa
+// função para buscar um bolsista em uma bolsa
 int auxiliar_buscar_bolsista_por_nome(Bolsista * bolsistas, char * nome_bolsista){
 
     //caso não exista nenhum bolsista cadastrado na bolsa
@@ -77,45 +79,77 @@ int auxiliar_buscar_bolsista_por_nome(Bolsista * bolsistas, char * nome_bolsista
         return FALHA;
     
 }
-int auxiliar_excluir_bolsista_por_nome(Bolsista ** bolsistas, char * nome_bolsista){
 
-    Bolsista * contador_de_bolsistas = *bolsistas;
-    Bolsista * ant = NULL;
-    while(contador_de_bolsistas != NULL){
+int auxiliar_buscar_bolsista_por_matricula(Bolsista *bolsistas, long int matricula)
+{
+    if (bolsistas == NULL)
+    {
+        return FALHA;
+    }
+    Bolsista *count = bolsistas;
+    while (count != NULL)
+    {
+        if (count->matricula == matricula)
+        {
+            printf("Bolsista: %s\n", count->nome_completo);
+            printf("Matricula: %ld\n", count->matricula);
+            printf("Curso: %s\n", count->curso);
+            printf("CPF: %s\n", count->CPF);
+            printf("Bolsa Associada: %s\n\n", count->bolsa_associada);
+            return SUCESSO;
+        }
+        count = count->proximo_bolsista;
+    }
+    printf("Bolsista com matricula %ld nao esta cadastrado em nenhuma bolsa!");
+    return FALHA;
+}
+int auxiliar_excluir_bolsista_por_nome(Bolsista **bolsistas, char *nome_bolsista)
+{
 
-         //encontrou o bolsista para remover
-        if(strcmp(contador_de_bolsistas->nome_completo, nome_bolsista) == 0){
+    Bolsista *contador_de_bolsistas = *bolsistas;
+    Bolsista *ant = NULL;
+    while (contador_de_bolsistas != NULL)
+    {
 
-            //caso seja o primeiro bolsista
-            if(ant == NULL){
+        // encontrou o bolsista para remover
+        if (strcmp(contador_de_bolsistas->nome_completo, nome_bolsista) == 0)
+        {
+
+            // caso seja o primeiro bolsista
+            if (ant == NULL)
+            {
                 *bolsistas = contador_de_bolsistas->proximo_bolsista;
             }
-            //caso seja algum bolsista apos o primeiro
-            else{
+            // caso seja algum bolsista apos o primeiro
+            else
+            {
                 ant->proximo_bolsista = contador_de_bolsistas->proximo_bolsista;
             }
             printf("Bolsista '%s' removido com sucesso!\n", nome_bolsista);
             free(contador_de_bolsistas);
-            return SUCESSO;//flag indicando se o bolsista foi excluido
+            return SUCESSO; // flag indicando se o bolsista foi excluido
         }
-        
-        //avança para o proximo bolsista
+
+        // avança para o proximo bolsista
         ant = contador_de_bolsistas;
         contador_de_bolsistas = contador_de_bolsistas->proximo_bolsista;
     }
     return FALHA;
 }
 
-//função para exibir todos os bolsistas de uma determinada bolsa
-void listar_bolsistas(Bolsista * bolsistas){
-    if(bolsistas == NULL){
+// função para exibir todos os bolsistas de uma determinada bolsa
+void listar_bolsistas(Bolsista *bolsistas)
+{
+    if (bolsistas == NULL)
+    {
         printf("Nenhum bolsista cadastrado!\n\n");
         return;
     }
-    Bolsista * count = bolsistas;
-    while(count != NULL){
+    Bolsista *count = bolsistas;
+    while (count != NULL)
+    {
         printf("Bolsista: %s\n", count->nome_completo);
-        printf("Matricula: %ld\n",count->matricula);
+        printf("Matricula: %ld\n", count->matricula);
         printf("Curso: %s\n", count->curso);
         printf("CPF: %s\n", count->CPF);
         printf("Bolsa Associada: %s\n\n", count->bolsa_associada);
@@ -123,38 +157,44 @@ void listar_bolsistas(Bolsista * bolsistas){
     }
 }
 
-//função para contar quantos bolsistas estão cadastrados em uma determinada bolsa
-int quantitativo_bolsistas(Bolsista * bolsistas){
+// função para contar quantos bolsistas estão cadastrados em uma determinada bolsa
+int quantitativo_bolsistas(Bolsista *bolsistas)
+{
     int quantidade = 0;
-    Bolsista * count = bolsistas;
+    Bolsista *count = bolsistas;
 
-    //conta quantos bolsistas estao cadastrados na bolsa
-    while(count != NULL){
+    // conta quantos bolsistas estao cadastrados na bolsa
+    while (count != NULL)
+    {
         count = count->proximo_bolsista;
         quantidade++;
     }
 
-    //retorna a quantidade de bolsistas cadastrados na bolsa
+    // retorna a quantidade de bolsistas cadastrados na bolsa
     return quantidade;
 }
 
-//função para ler os bolsistas armazenados no banco de dado
-Bolsista * ler_bolsista_arquivo(FILE ** banco_de_dados, Bolsista * bolsistas){
+// função para ler os bolsistas armazenados no banco de dado
+Bolsista *ler_bolsista_arquivo(FILE **banco_de_dados, Bolsista *bolsistas)
+{
     char linha[100];
-    Bolsista * novo_bolsista = NULL;
+    Bolsista *novo_bolsista = NULL;
 
-    //inicia a leitura dos bolsistas
-    while(fgets(linha,sizeof(linha), *banco_de_dados) != NULL && !strstr(linha, "===============================")){
+    // inicia a leitura dos bolsistas
+    while (fgets(linha, sizeof(linha), *banco_de_dados) != NULL && !strstr(linha, "==============================="))
+    {
 
-        if(strstr(linha, "Bolsista:")){
-            
-            novo_bolsista = (Bolsista*)malloc(sizeof(Bolsista));
-            if(novo_bolsista == NULL){
+        if (strstr(linha, "Bolsista:"))
+        {
+
+            novo_bolsista = (Bolsista *)malloc(sizeof(Bolsista));
+            if (novo_bolsista == NULL)
+            {
                 printf("Memoria Insuficiente!\n");
                 exit(1);
             }
 
-            //armazena as informações do bolsista
+            // armazena as informações do bolsista
             sscanf(linha, "Bolsista: %[^\n]", novo_bolsista->nome_completo);
             fgets(linha, sizeof(linha), *banco_de_dados);
             sscanf(linha, "Matricula: %ld", &novo_bolsista->matricula);
@@ -165,14 +205,17 @@ Bolsista * ler_bolsista_arquivo(FILE ** banco_de_dados, Bolsista * bolsistas){
             fgets(linha, sizeof(linha), *banco_de_dados);
             sscanf(linha, "Bolsa Associada: %[^\n]", novo_bolsista->bolsa_associada);
 
-            //adiciona o novo bolsista ao final da lista
+            // adiciona o novo bolsista ao final da lista
             novo_bolsista->proximo_bolsista = NULL;
-            if(bolsistas == NULL){
+            if (bolsistas == NULL)
+            {
                 bolsistas = novo_bolsista;
             }
-            else{
-                Bolsista * aux = bolsistas;
-                while(aux->proximo_bolsista != NULL){
+            else
+            {
+                Bolsista *aux = bolsistas;
+                while (aux->proximo_bolsista != NULL)
+                {
                     aux = aux->proximo_bolsista;
                 }
                 aux->proximo_bolsista = novo_bolsista;
@@ -184,21 +227,23 @@ Bolsista * ler_bolsista_arquivo(FILE ** banco_de_dados, Bolsista * bolsistas){
     return bolsistas;
 }
 
-
-//função para armazenar no arquivo os alunos de uma determinada bolsa
-void insere_bolsista_arquivo(FILE ** banco_de_dados, Bolsista * bolsistas){
-    Bolsista * count = bolsistas;
+// função para armazenar no arquivo os alunos de uma determinada bolsa
+void insere_bolsista_arquivo(FILE **banco_de_dados, Bolsista *bolsistas)
+{
+    Bolsista *count = bolsistas;
 
     fprintf(*banco_de_dados, "BOLSISTAS:\n");
 
-    //caso não tenha nenhum bolsista cadastrado na bolsa
-    if(bolsistas == NULL){
-        fprintf(*banco_de_dados,"Nenhum bolsista cadastrado!\n\n");
+    // caso não tenha nenhum bolsista cadastrado na bolsa
+    if (bolsistas == NULL)
+    {
+        fprintf(*banco_de_dados, "Nenhum bolsista cadastrado!\n\n");
         return;
     }
 
-    //armazena todos os bolsistas de uma bolsa
-    while(count != NULL){
+    // armazena todos os bolsistas de uma bolsa
+    while (count != NULL)
+    {
         fprintf(*banco_de_dados, "Bolsista: %s\n", count->nome_completo);
         fprintf(*banco_de_dados, "Matricula: %ld\n", count->matricula);
         fprintf(*banco_de_dados, "Curso: %s\n", count->curso);

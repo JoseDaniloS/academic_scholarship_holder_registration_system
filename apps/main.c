@@ -1,30 +1,34 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "./sistema/system.h"
+#include "../include/bolsas.h"
 
-void limpar_tela(){
-    #ifdef _WIN32
-        system("cls");
-    #else
-        system("clear");
-    #endif
+void limpar_tela()
+{
+#ifdef _WIN32
+    system("cls");
+#else
+    system("clear");
+#endif
 }
 
-int main(void){
+int main(void)
+{
     int opcao;
-    Bolsa * bolsas;
-    FILE * arquivo = Verificacao("./banco_de_dados/bolsas.txt", "rt");
+    Bolsa *bolsas;
+    FILE *arquivo = Verificacao("../banco_de_dados/bolsas.txt", "rt");
     ler_bolsa_arquivo(&arquivo, &bolsas);
     fclose(arquivo);
-    
-    do{
+
+    do
+    {
         menu_de_opcoes();
         scanf("%d", &opcao);
-        switch (opcao){
+        switch (opcao)
+        {
         case 1:
             printf("Adicionando Bolsa...\n");
             preenche_bolsa(&bolsas);
-            Verificacao("./banco_de_dados/bolsas.txt", "w");
+            Verificacao("../banco_de_dados/bolsas.txt", "w");
             insere_bolsa_arquivo(&arquivo, &bolsas);
             fclose(arquivo);
             limpar_tela();
@@ -33,7 +37,7 @@ int main(void){
 
             printf("Adicionando Bolsista...\n");
             preenche_bolsista(&bolsas);
-            Verificacao("./banco_de_dados/bolsas.txt", "w");
+            Verificacao("../banco_de_dados/bolsas.txt", "w");
             insere_bolsa_arquivo(&arquivo, &bolsas);
             fclose(arquivo);
             limpar_tela();
@@ -42,7 +46,7 @@ int main(void){
 
             printf("Excluindo Bolsista...\n");
             excluir_bolsista_por_nome(&bolsas);
-            Verificacao("./banco_de_dados/bolsas.txt", "w");
+            Verificacao("../banco_de_dados/bolsas.txt", "w");
             insere_bolsa_arquivo(&arquivo, &bolsas);
             fclose(arquivo);
             limpar_tela();
@@ -50,7 +54,7 @@ int main(void){
         case 4:
 
             printf("Excluindo bolsa...\n");
-            Verificacao("./banco_de_dados/bolsas.txt", "w");
+            Verificacao("../banco_de_dados/bolsas.txt", "w");
             insere_bolsa_arquivo(&arquivo, &bolsas);
             fclose(arquivo);
             limpar_tela();
@@ -63,13 +67,13 @@ int main(void){
         case 6:
 
             printf("Buscando Bolsista...\n");
-            buscar_bolsista_por_nome(&bolsas);
+            menu_busca_bolsista(&bolsas);
             break;
         case 7:
 
             printf("Editando Dados do Bolsista...\n");
-            //funçao para editar aqui
-            Verificacao("./banco_de_dados/bolsas.txt", "w");
+            edita_dados_bolsista(&bolsas);
+            Verificacao("../banco_de_dados/bolsas.txt", "w");
             insere_bolsa_arquivo(&arquivo, &bolsas);
             fclose(arquivo);
             break;
@@ -82,11 +86,11 @@ int main(void){
             printf("Saindo...\n");
             exit(1);
             break;
-        
+
         default:
-        printf("Opcao Invalida!\n");
+            printf("Opcao Invalida!\n");
             break;
         }
-    }while(opcao != 9);
+    } while (opcao != 9);
     return 0;
 }
