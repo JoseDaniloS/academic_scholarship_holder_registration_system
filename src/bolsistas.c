@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
-#include "bolsistas.h"
+#include "../include/bolsistas.h"
 
 #define FALHA 0
 #define SUCESSO 1
@@ -64,7 +64,7 @@ int auxiliar_buscar_bolsista_por_nome(Bolsista * bolsistas, char * nome_bolsista
     while(count != NULL){
         if(strcmp(count->nome_completo, nome_bolsista) == 0){
 
-            printf("Bolsista: %s\n", count->nome_completo);
+            printf("\nBolsista: %s\n", count->nome_completo);
             printf("Matricula: %ld\n",count->matricula);
             printf("Curso: %s\n", count->curso);
             printf("CPF: %s\n", count->CPF);
@@ -91,7 +91,7 @@ int auxiliar_buscar_bolsista_por_matricula(Bolsista *bolsistas, long int matricu
     {
         if (count->matricula == matricula)
         {
-            printf("Bolsista: %s\n", count->nome_completo);
+            printf("\nBolsista: %s\n", count->nome_completo);
             printf("Matricula: %ld\n", count->matricula);
             printf("Curso: %s\n", count->curso);
             printf("CPF: %s\n", count->CPF);
@@ -155,6 +155,24 @@ void listar_bolsistas(Bolsista *bolsistas)
         printf("Bolsa Associada: %s\n\n", count->bolsa_associada);
         count = count->proximo_bolsista;
     }
+}
+
+//função para verificar se o cpf ja existe na bolsa
+int verifica_cpf_existente(char * CPF, Bolsista * bolsistas){
+    Bolsista * count = bolsistas;
+
+    while(count != NULL){
+        
+        if(strcmp(count->CPF, CPF) == 0){
+            printf("CPF ja esta cadastrado.\n");
+            return FALHA; //cpf ja existe no banco de dados
+        }
+
+        count = count->proximo_bolsista;
+    }
+
+    //cpf ainda nao cadastrado
+    return SUCESSO;
 }
 
 // função para contar quantos bolsistas estão cadastrados em uma determinada bolsa

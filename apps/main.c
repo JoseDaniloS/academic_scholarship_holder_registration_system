@@ -27,7 +27,7 @@ int main(void)
         {
         case 1:
             printf("Adicionando Bolsa...\n");
-            preenche_bolsa(&bolsas);
+            insere_bolsa(&bolsas);
             Verificacao("../banco_de_dados/bolsas.txt", "w");
             insere_bolsa_arquivo(&arquivo, &bolsas);
             fclose(arquivo);
@@ -36,7 +36,7 @@ int main(void)
         case 2:
 
             printf("Adicionando Bolsista...\n");
-            preenche_bolsista(&bolsas);
+            adiciona_bolsista_na_bolsa(&bolsas);
             Verificacao("../banco_de_dados/bolsas.txt", "w");
             insere_bolsa_arquivo(&arquivo, &bolsas);
             fclose(arquivo);
@@ -55,6 +55,7 @@ int main(void)
 
             printf("Excluindo bolsa...\n");
             Verificacao("../banco_de_dados/bolsas.txt", "w");
+            //
             insere_bolsa_arquivo(&arquivo, &bolsas);
             fclose(arquivo);
             limpar_tela();
@@ -80,7 +81,7 @@ int main(void)
         case 8:
 
             printf("Consultando as Bolsas Disponiveis...\n");
-            consultar_bolsas_disponiveis(bolsas);
+            consultar_bolsas_disponiveis(&bolsas);
             break;
         case 9:
             printf("Saindo...\n");

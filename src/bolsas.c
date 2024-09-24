@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
-#include "bolsas.h"
+#include "../include/bolsas.h"
 
 #define SUCESSO 1
 #define FALHA 0
@@ -123,7 +123,7 @@ void menu_busca_bolsista(Bolsa ** bolsas){
             buscar_bolsista_por_nome(bolsas);
             break;
         case 2:
-            //função para buscar bolsista por matricula
+            buscar_bolsista_por_matricula(bolsas);
             break;
         case 3:
             printf("Voltando ao menu anterior...\n");
@@ -235,12 +235,12 @@ void consultar_bolsas_disponiveis(Bolsa **bolsas)
 {
 
     // caso não exista bolsas cadastradas
-    if (bolsas == NULL)
+    if (*bolsas == NULL)
     {
         printf("Nao ha bolsas cadastradas!\n");
         return;
     }
-    Bolsa *count = bolsas;
+    Bolsa *count = *bolsas;
 
     // printa na tela as informações das bolsas
     while (count != NULL)
@@ -282,7 +282,7 @@ void auxiliar_listar_bolsistas(Bolsa **bolsas)
 }
 
 // função para preencher dados de um bolsista
-void preenche_bolsista(Bolsa **bolsas)
+void adiciona_bolsista_na_bolsa(Bolsa **bolsas)
 {
     char nome_bolsa[MAX];
     Bolsa *bolsa_encontrada = NULL;

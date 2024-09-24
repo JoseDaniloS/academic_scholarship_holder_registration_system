@@ -1,0 +1,16 @@
+===============================
+BOLSA:
+Tipo: Academica
+Valor Mensal: 500.0
+Data de Inicio: 22/22/2000
+Data de Termino: 22/22/2000
+
+BOLSISTAS:
+Bolsista: Jose Danilo
+Matricula: 12983
+Curso: Tecnologia da Informacao
+CPF:12345678910
+Bolsa Associada: Academica
+
+===============================
+

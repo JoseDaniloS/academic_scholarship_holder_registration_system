@@ -1,6 +1,8 @@
 #include "../include/sistema.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
+#include <ctype.h>
 
 //funçao que exibe o menu de opçoes
 void menu_de_opcoes(){
