@@ -103,3 +103,40 @@ float verifica_float(char * numero) {
 
     return resultado; // Retorna o valor convertido
 }
+//função para verificar um caracter é do tipo alfabeto ou se é um espaço
+int verifica_caracter(char * nome){
+    
+    int i = 0;
+
+    while(i < strlen(nome)){
+
+        if(!isalpha(nome[i]) && !isspace(nome[i])){//se nao for um caracter nem um espaço
+
+            printf("Caracter Invalido!\n");
+            return FALHA;
+        }
+        i++;
+    }
+    return SUCESSO;
+}
+
+//função que corrige o nome para o padrao correto
+char * transforma_caracter_padrao(char * nome){
+
+    nome[0] = toupper(nome[0]);//transfomra primeiro caracter em maiusculo
+
+    int i = 1;
+    while(nome[i] != '\0'){
+
+        if(isspace(nome[i-1])){
+            nome[i] = toupper(nome[i]);//transforma todos os caracteres após o espaço em maiusculo
+        }
+
+        else{
+            nome[i] = tolower(nome[i]);//transforma todos os caracteres apos a primeira letra maiuscula em minusculo
+        }
+        i++;
+    }
+
+    return nome;
+}

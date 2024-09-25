@@ -3,11 +3,8 @@
 #include <stdio.h>
 #include "../include/bolsistas.h"
 
-#define FALHA 0
-#define SUCESSO 1
 
-struct bolsista
-{
+struct bolsista{
     char nome_completo[MAX];
     long int matricula;
     char curso[50];
@@ -26,12 +23,27 @@ void adiciona_bolsista(Bolsista ** bolsistas, char * nome_bolsa){
     }
     char nome_bolsista[70], curso[50], CPF[12];
     long int matricula;
-    printf("Informe o Nome:\n");
-    scanf(" %[^\n]", nome_bolsista);
+    int verificador = FALHA, verificador2 = FALHA;
 
-    printf("Informe o Curso:\n");
-    scanf(" %[^\n]", curso);
+    do{
 
+        printf("Informe o Nome:\n");
+        scanf(" %[^\n]", nome_bolsista);
+        verificador = verifica_caracter(nome_bolsista);
+        transforma_caracter_padrao(nome_bolsista);//conserta o nome para um padrao
+        verificador2 = verifica_bolsista_existente(*bolsistas,nome_bolsista);
+
+    }while(verificador == FALHA || verificador2 == FALHA);
+
+    do{
+        printf("Informe o Curso:\n");
+        scanf(" %[^\n]", curso);
+        verificador = verifica_caracter(curso);
+    }while(verificador == FALHA);
+
+    transforma_caracter_padrao(curso);//conserta o nome para um padrao
+
+    //função que verifica matricula
     printf("Informe a Matricula:\n");
     scanf("%ld", &matricula);
 
@@ -138,6 +150,20 @@ int auxiliar_excluir_bolsista_por_nome(Bolsista **bolsistas, char *nome_bolsista
     return FALHA;
 }
 
+//função auxiliar para excluir todas as bolsas
+void auxiliar_excluir_bolsas(Bolsista ** bolsistas){
+    Bolsista * count = *bolsistas;
+    Bolsista * proxima = NULL;
+
+    while(count != NULL){
+        proxima = count->proximo_bolsista;
+        free(count);
+        count = proxima;
+    }
+
+    *bolsistas = NULL;
+}
+
 // função para exibir todos os bolsistas de uma determinada bolsa
 void listar_bolsistas(Bolsista *bolsistas)
 {
@@ -173,6 +199,22 @@ int verifica_cpf_existente(char * CPF, Bolsista * bolsistas){
     }
 
     //cpf ainda nao cadastrado
+    return SUCESSO;
+}
+
+//função para verificar que um bolsista ja foi cadastrado na bolsa
+int verifica_bolsista_existente(Bolsista * bolsistas, char * nome_bolsista){
+    Bolsista * count = bolsistas;
+
+    while(count != NULL){
+        //verifica se o bolsista ja esta cadastrado na bolsa
+        if(strcmp(count->nome_completo, nome_bolsista) == 0){
+
+            printf("Bolsista %s ja cadastrado!\n", nome_bolsista);
+            return FALHA;//bolsita ja cadastrado
+        }
+    }
+    //bolsista nao cadastrado
     return SUCESSO;
 }
 

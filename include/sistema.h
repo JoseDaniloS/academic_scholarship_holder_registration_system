@@ -18,4 +18,8 @@ int verifica_inteiro(char * numero);
 
 float verifica_float(char * numero);
 
+int verifica_caracter(char * nome);
+
+char * transforma_caracter_padrao(char * nome);
+
 #endif // SYSTEM_H

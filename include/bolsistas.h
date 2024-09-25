@@ -16,9 +16,13 @@ Bolsista * auxiliar_buscar_bolsista_por_nome(Bolsista* bolsistas, char* nome_bol
 
 int auxiliar_excluir_bolsista_por_nome(Bolsista** bolsistas, char* nome_bolsista);
 
+void auxiliar_excluir_bolsas(Bolsista ** bolsistas);
+
 int auxiliar_buscar_bolsista_por_matricula(Bolsista *bolsistas, long int matricula);
 
 void listar_bolsistas(Bolsista* bolsistas);
+
+int verifica_bolsista_existente(Bolsista * bolsistas, char * nome_bolsista);
 
 int quantitativo_bolsistas(Bolsista* bolsistas);
 
