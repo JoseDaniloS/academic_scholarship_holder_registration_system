@@ -54,8 +54,8 @@ int main(void)
         case 4:
 
             printf("Excluindo bolsa...\n");
+            excluir_bolsas(&bolsas);
             Verificacao("../banco_de_dados/bolsas.txt", "w");
-            //
             insere_bolsa_arquivo(&arquivo, &bolsas);
             fclose(arquivo);
             limpar_tela();

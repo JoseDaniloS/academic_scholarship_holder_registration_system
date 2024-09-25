@@ -3,9 +3,8 @@
 #include <stdio.h>
 #include "../include/bolsas.h"
 
-#define SUCESSO 1
-#define FALHA 0
-#define MAX 100
+
+#define MAX_BOLSA 30
 
 struct data
 {
@@ -16,7 +15,7 @@ struct data
 
 struct bolsa
 {
-    char nome_bolsa[MAX];
+    char nome_bolsa[MAX_BOLSA];
     float valor_mensal;
     Data inicio;
     Data termino;
@@ -27,12 +26,20 @@ struct bolsa
 void insere_bolsa(Bolsa **bolsas)
 {
 
-    char nome_bolsa[30];
+    char nome_bolsa[MAX_BOLSA];
     float valor_mensal;
     char c_numero[10];
+    int verificador = FALHA, verificador2 = FALHA;
+    
+    do{
 
-    printf("Informe o nome da bolsa:\n");
-    scanf(" %[^\n]", nome_bolsa);
+        printf("Informe o nome da bolsa:\n");
+        scanf(" %[^\n]", nome_bolsa);
+        verificador = verifica_caracter(nome_bolsa);
+        transforma_caracter_padrao(nome_bolsa);
+        verificador2 = verifica_bolsa_existente(*bolsas, nome_bolsa);
+
+    }while(verificador == FALHA || verificador2 == FALHA);
 
     // verifica se o valor mensal está no formato correto
     do
@@ -73,17 +80,72 @@ void insere_bolsa(Bolsa **bolsas)
     // retorna a nova cabeça da lista
     *bolsas = nova_bolsa;
 }
+
+//função para excluir uma bolsa
+void excluir_bolsas(Bolsa ** bolsas){
+
+    if(bolsa_vazia(*bolsas) == FALHA){
+        return;
+    }
+
+    int verificacao = FALHA;
+    char nome_bolsa[MAX_BOLSA];
+    Bolsa * count = *bolsas;
+    Bolsa * ant = NULL;
+
+    do{
+        printf("Informe o nome da Bolsa:\n");
+        scanf(" %[^\n]", nome_bolsa);
+        verificacao = verifica_caracter(nome_bolsa);
+
+    }while(verificacao == FALHA);
+
+    transforma_caracter_padrao(nome_bolsa);
+
+    while(count != NULL){
+        
+        //se encontrar a bolsa
+        if(strcmp(count->nome_bolsa, nome_bolsa) == 0){
+
+            //se a bolsa a ser removida seja a primeira
+            if(ant == NULL){
+                *bolsas = count->proxima_bolsa;
+            }
+            //ser a bolsa a ser removida seja apos a primeira
+            else{
+                ant->proxima_bolsa = count->proxima_bolsa;
+            }
+            printf("Bolsa %s removida com sucesso!\n", nome_bolsa);
+            auxiliar_excluir_bolsas(&count->bolsistas);
+            free(count);
+            return;
+        }
+        //avança a proxima bolsa
+        ant = count;
+        count = count->proxima_bolsa;
+    }
+    printf("Bolsa %s nao encontrada!\n", nome_bolsa);
+    return;
+}
+
 // função para excluir um bolsista de uma bolsa
 void excluir_bolsista_por_nome(Bolsa **bolsas)
 {
 
+    //verifica se a bolsa esta vazia
     if (bolsa_vazia(*bolsas) == FALHA)
     {
         return;
     }
     char nome_bolsista[40];
-    printf("Informe o nome do bolsista:\n");
-    scanf(" %[^\n]", nome_bolsista);
+    int verificador = FALHA;
+    do{
+        printf("Informe o nome do bolsista:\n");
+        scanf(" %[^\n]", nome_bolsista);
+        verifica_caracter(nome_bolsista);
+    }while(verificador == FALHA);
+
+    transforma_caracter_padrao(nome_bolsista);
 
     Bolsa *count = *bolsas;
     int bolsista_excluido = FALHA;
@@ -103,7 +165,23 @@ void excluir_bolsista_por_nome(Bolsa **bolsas)
         printf("Bolsista '%s' nao encontrado!\n", nome_bolsista);
     }
 }
+int verifica_bolsa_existente(Bolsa * bolsas, char * nome_bolsa){
 
+    Bolsa * count = bolsas;
+
+    while(count != NULL){
+        //verifica se a bolsa ja esta cadastrada
+        if(strcmp(count->nome_bolsa, nome_bolsa) == 0){
+
+            printf("Bolsa %s ja cadastrada!\n", nome_bolsa);
+            return FALHA;//bolsa ja existe
+        }
+
+        count = count->proxima_bolsa;
+    }
+
+    return SUCESSO;//bolsa nao encontrada
+}
 // função para buscar um bolsista
 void menu_busca_bolsista(Bolsa **bolsas)
 {
@@ -155,10 +233,17 @@ Bolsa *buscar_bolsista_por_nome(Bolsa **bolsas)
     }
 
     char nome_bolsista[40];
-    Bolsista *bolsista_encontrado = NULL;
+    int verificador = FALHA;
+    do{
+        printf("Informe o nome do Bolsista:\n");
+        scanf(" %[^\n]", nome_bolsista);
+        verifica_caracter(nome_bolsista);
+    }while(verificador == FALHA);
 
-    printf("Informe o nome do Bolsista:\n");
-    scanf(" %[^\n]", nome_bolsista);
+    transforma_caracter_padrao(nome_bolsista);
+
+    Bolsa *count = *bolsas;
+    Bolsista *bolsista_encontrado = NULL;
 
     while (count != NULL)
     {
@@ -293,11 +378,17 @@ void auxiliar_listar_bolsistas(Bolsa **bolsas)
 // função para preencher dados de um bolsista
 void adiciona_bolsista_na_bolsa(Bolsa **bolsas)
 {
-    char nome_bolsa[MAX];
+    char nome_bolsa[MAX_BOLSA];
     Bolsa *bolsa_encontrada = NULL;
+    int verificador = FALHA;
 
-    printf("Informe a Bolsa que o Aluno vai ser Vinculado:\n");
-    scanf(" %[^\n]", nome_bolsa);
+    do{
+        printf("Informe a Bolsa que o Aluno vai ser Vinculado:\n");
+        scanf(" %[^\n]", nome_bolsa);
+        verificador = verifica_caracter(nome_bolsa);
+    }while(verificador == FALHA);
+
+    transforma_caracter_padrao(nome_bolsa);
 
     // busca a bolsa que o bolsista vai ser adicionado
     bolsa_encontrada = busca_bolsa(nome_bolsa, *bolsas);
@@ -315,7 +406,7 @@ void adiciona_bolsista_na_bolsa(Bolsa **bolsas)
 // funçao para escanear todas as bolsas armazenadas no banco de dado
 void ler_bolsa_arquivo(FILE **banco_de_dados, Bolsa **bolsas)
 {
-    char linha[MAX];
+    char linha[MAX_BOLSA];
     Bolsa *nova_bolsa = NULL;
 
     while (fgets(linha, sizeof(linha), *banco_de_dados) != NULL)

@@ -13,6 +13,8 @@ void insere_bolsa(Bolsa** bolsas);
 
 Bolsa* busca_bolsa(char* nome_bolsa, Bolsa* bolsas);
 
+void excluir_bolsas(Bolsa ** bolsas);
+
 void consultar_bolsas_disponiveis(Bolsa** bolsas);
 
 
@@ -28,6 +30,8 @@ Bolsa* buscar_bolsista_por_matricula(Bolsa **bolsas);
 void adiciona_bolsista_na_bolsa(Bolsa** bolsas);
 
 void excluir_bolsista_por_nome(Bolsa** bolsas);
+
+int verifica_bolsa_existente(Bolsa * bolsas, char * nome_bolsa);
 
 void menu_busca_bolsista(Bolsa** bolsas);
 
