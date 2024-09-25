@@ -15,7 +15,7 @@ Bolsa* busca_bolsa(char* nome_bolsa, Bolsa* bolsas);
 
 void consultar_bolsas_disponiveis(Bolsa** bolsas);
 
-void edita_dados_bolsista(Bolsa **bolsas);
+
 
 void ler_bolsa_arquivo(FILE** banco_de_dados, Bolsa** bolsas);
 
@@ -23,7 +23,7 @@ void insere_bolsa_arquivo(FILE** banco_de_dados, Bolsa** bolsas);
 
 void auxiliar_listar_bolsistas(Bolsa** bolsas);
 
-void buscar_bolsista_por_matricula(Bolsa **bolsas);
+Bolsa* buscar_bolsista_por_matricula(Bolsa **bolsas);
 
 void adiciona_bolsista_na_bolsa(Bolsa** bolsas);
 
@@ -31,7 +31,7 @@ void excluir_bolsista_por_nome(Bolsa** bolsas);
 
 void menu_busca_bolsista(Bolsa** bolsas);
 
-void buscar_bolsista_por_nome(Bolsa** bolsas);
+Bolsa* buscar_bolsista_por_nome(Bolsa** bolsas);
 
 int bolsa_vazia(Bolsa* bolsas);
 

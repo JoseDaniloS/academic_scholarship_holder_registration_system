@@ -145,13 +145,13 @@ void menu_busca_bolsista(Bolsa **bolsas)
 }
 
 // função para buscar um bolsista por nome
-void buscar_bolsista_por_nome(Bolsa **bolsas)
+Bolsa *buscar_bolsista_por_nome(Bolsa **bolsas)
 {
-
+    Bolsa *count = *bolsas;
     // caso nao tenha nenhuma bolsa cadastrada
     if (bolsa_vazia(*bolsas) == FALHA)
     {
-        return;
+        return NULL;
     }
 
     char nome_bolsista[40];
@@ -160,52 +160,50 @@ void buscar_bolsista_por_nome(Bolsa **bolsas)
     printf("Informe o nome do Bolsista:\n");
     scanf(" %[^\n]", nome_bolsista);
 
-    Bolsa *count = *bolsas;
-
     while (count != NULL)
     {
         bolsista_encontrado = auxiliar_buscar_bolsista_por_nome(count->bolsistas, nome_bolsista);
         count = count->proxima_bolsa;
     }
     // caso nao encontre o bolsista
-    if (bolsista_encontrado == NULL)
+    if (bolsista_encontrado != NULL)
     {
-        printf("Bolsista nao encontrado!\n");
-        return;
+        return bolsista_encontrado;
     }
     // caso encontre retorna para o menu
     else
     {
-        return;
+        return NULL;
     }
 }
 
-void buscar_bolsista_por_matricula(Bolsa **bolsas)
+Bolsa *buscar_bolsista_por_matricula(Bolsa **bolsas)
 {
-    long int matricula;
-    if (*bolsas == NULL)
+    Bolsa *count = *bolsas;
+
+    if (bolsa_vazia(*bolsas) == NULL)
     {
         printf("Nao há bolsas cadastradas.");
-        return;
+        return NULL;
     }
 
+    long int matricula;
+    Bolsista* bolsista_encontrado = NULL;
     printf("Informe a matricula do bolsista: ");
     scanf("%ld", &matricula);
-    Bolsa *count = *bolsas;
-    int verificador = FALHA;
+
     while (count != NULL)
     {
-        verificador = auxiliar_buscar_bolsista_por_matricula(count->bolsistas, matricula);
+        bolsista_encontrado = auxiliar_buscar_bolsista_por_matricula(count->bolsistas, matricula);
         count = count->proxima_bolsa;
     }
-    if (verificador == FALHA)
+    if (bolsista_encontrado != FALHA)
     {
-        printf("Bolsista nao encontrado");
-        return;
+        return bolsista_encontrado;
     }
     else
     {
-        return;
+        return NULL;
     }
 }
 
@@ -394,23 +392,6 @@ void insere_bolsa_arquivo(FILE **banco_de_dados, Bolsa **bolsas)
 
 // terminar função de editar os dados, adiconando a opção de editar por nome ou matricula
 // corrigir o erro do arquivo, possível problema: caminho não encontrado
-void edita_dados_bolsista(Bolsa **bolsas)
-{
-    char nome_bolsista[MAX];
-    Bolsa *bolsista_encontrado;
-    if(bolsas == NULL || *bolsas == NULL){
-        printf("Não ha bolsas disponiveis.");
-        return;
-    }
-    printf("Digite o nome do bolsista que deseja editar: ");
-    scanf(" %[^\n]", nome_bolsista);
-    bolsista_encontrado = auxiliar_buscar_bolsista_por_nome(*bolsas, nome_bolsista);
-    if (bolsista_encontrado != NULL)
-    {
-    
-        
-    }
-}
 
 // função para verificar se a lista de bolsas está vazia
 int bolsa_vazia(Bolsa *bolsas)
@@ -422,3 +403,4 @@ int bolsa_vazia(Bolsa *bolsas)
     }
     return SUCESSO;
 }
+

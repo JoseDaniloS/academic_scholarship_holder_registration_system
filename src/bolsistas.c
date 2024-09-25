@@ -17,10 +17,12 @@ struct bolsista
 };
 
 // função para adicionar um bolsista em uma bolsa disponivel
-void adiciona_bolsista(Bolsista ** bolsistas, char * nome_bolsa){
+void adiciona_bolsista(Bolsista **bolsistas, char *nome_bolsa)
+{
 
-    Bolsista * novo_bolsista = (Bolsista*)malloc(sizeof(Bolsista));
-    if(novo_bolsista == NULL){
+    Bolsista *novo_bolsista = (Bolsista *)malloc(sizeof(Bolsista));
+    if (novo_bolsista == NULL)
+    {
         printf("Memoria Insuficiente!\n");
         exit(1);
     }
@@ -35,37 +37,42 @@ void adiciona_bolsista(Bolsista ** bolsistas, char * nome_bolsa){
     printf("Informe a Matricula:\n");
     scanf("%ld", &matricula);
 
-    do{
+    do
+    {
         printf("Informe o CPF(11 digitos):\n");
         scanf(" %[^\n]", CPF);
-    }while(verifica_cpf_existente(CPF, *bolsistas) == FALHA || verifica_cpf_valido(CPF) == FALHA);
+    } while (verifica_cpf_existente(CPF, *bolsistas) == FALHA || verifica_cpf_valido(CPF) == FALHA);
 
-    //adicionando as informações ao novo bolsista
+    // adicionando as informações ao novo bolsista
     strcpy(novo_bolsista->nome_completo, nome_bolsista);
     strcpy(novo_bolsista->curso, curso);
     strcpy(novo_bolsista->bolsa_associada, nome_bolsa);
     strcpy(novo_bolsista->CPF, CPF);
     novo_bolsista->matricula = matricula;
 
-    //vinculando a lista de bolsistas da bolsa
+    // vinculando a lista de bolsistas da bolsa
     novo_bolsista->proximo_bolsista = *bolsistas;
     *bolsistas = novo_bolsista;
 }
 // função para buscar um bolsista em uma bolsa
-Bolsista * auxiliar_buscar_bolsista_por_nome(Bolsista * bolsistas, char * nome_bolsista){
+Bolsista *auxiliar_buscar_bolsista_por_nome(Bolsista *bolsistas, char *nome_bolsista)
+{
 
-    //caso não exista nenhum bolsista cadastrado na bolsa
-    if(bolsistas == NULL){
+    // caso não exista nenhum bolsista cadastrado na bolsa
+    if (bolsistas == NULL)
+    {
         return bolsistas;
     }
 
-    //percorre a lista de bolsistas de uma determianda bolsa
-    Bolsista * count = bolsistas;
-    while(count != NULL){
-        if(strcmp(count->nome_completo, nome_bolsista) == 0){
+    // percorre a lista de bolsistas de uma determianda bolsa
+    Bolsista *count = bolsistas;
+    while (count != NULL)
+    {
+        if (strcmp(count->nome_completo, nome_bolsista) == 0)
+        {
 
             printf("\nBolsista: %s\n", count->nome_completo);
-            printf("Matricula: %ld\n",count->matricula);
+            printf("Matricula: %ld\n", count->matricula);
             printf("Curso: %s\n", count->curso);
             printf("CPF: %s\n", count->CPF);
             printf("Bolsa Associada: %s\n\n", count->bolsa_associada);
@@ -74,13 +81,12 @@ Bolsista * auxiliar_buscar_bolsista_por_nome(Bolsista * bolsistas, char * nome_b
         count = count->proximo_bolsista;
     }
 
-    //caso o bolsista não esteja cadastrado na bolsa
-        printf("Bolsista %s nao cadastrado em nenhuma bolsa!\n", nome_bolsista);
-        return bolsistas;
-    
+    // caso o bolsista não esteja cadastrado na bolsa
+    printf("Bolsista %s nao cadastrado em nenhuma bolsa!\n", nome_bolsista);
+    return bolsistas;
 }
 
-int auxiliar_buscar_bolsista_por_matricula(Bolsista *bolsistas, long int matricula)
+Bolsista *auxiliar_buscar_bolsista_por_matricula(Bolsista *bolsistas, long int matricula)
 {
     if (bolsistas == NULL)
     {
@@ -100,8 +106,8 @@ int auxiliar_buscar_bolsista_por_matricula(Bolsista *bolsistas, long int matricu
         }
         count = count->proximo_bolsista;
     }
-    printf("Bolsista com matricula %ld nao esta cadastrado em nenhuma bolsa!");
-    return FALHA;
+    printf("Bolsista com matricula %ld nao esta cadastrado em nenhuma bolsa!", count->matricula);
+    return bolsistas;
 }
 
 int auxiliar_excluir_bolsista_por_nome(Bolsista **bolsistas, char *nome_bolsista)
@@ -158,21 +164,24 @@ void listar_bolsistas(Bolsista *bolsistas)
     }
 }
 
-//função para verificar se o cpf ja existe na bolsa
-int verifica_cpf_existente(char * CPF, Bolsista * bolsistas){
-    Bolsista * count = bolsistas;
+// função para verificar se o cpf ja existe na bolsa
+int verifica_cpf_existente(char *CPF, Bolsista *bolsistas)
+{
+    Bolsista *count = bolsistas;
 
-    while(count != NULL){
-        
-        if(strcmp(count->CPF, CPF) == 0){
+    while (count != NULL)
+    {
+
+        if (strcmp(count->CPF, CPF) == 0)
+        {
             printf("CPF ja esta cadastrado.\n");
-            return FALHA; //cpf ja existe no banco de dados
+            return FALHA; // cpf ja existe no banco de dados
         }
 
         count = count->proximo_bolsista;
     }
 
-    //cpf ainda nao cadastrado
+    // cpf ainda nao cadastrado
     return SUCESSO;
 }
 
@@ -271,4 +280,24 @@ void insere_bolsista_arquivo(FILE **banco_de_dados, Bolsista *bolsistas)
 
         count = count->proximo_bolsista;
     }
+}
+
+Bolsista *edita_dados_bolsista(Bolsista *bolsistas)
+{
+    char nome_bolsista[MAX];
+    Bolsista *bolsista_encontrado = NULL;
+    printf("Digite o nome do bolsista que deseja editar: ");
+    scanf(" %[^\n]", nome_bolsista);
+
+    bolsista_encontrado = auxiliar_buscar_bolsista_por_nome(bolsistas, nome_bolsista);
+    if (bolsista_encontrado == NULL)
+    {
+        printf("Bolsista não cadastrado.");
+        return NULL;
+    }
+    printf("Digite o novo nome: ");
+    scanf("%[^\n]", bolsista_encontrado->nome_completo);
+
+    printf("Digite a nova matricula: ");
+    scanf("%ld", &bolsista_encontrado->matricula);
 }
