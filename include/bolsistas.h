@@ -10,15 +10,19 @@ typedef struct bolsista Bolsista;
 // Funções para manipulação de bolsistas
 void adiciona_bolsista(Bolsista **bolsistas, char *nome_bolsa);
 
+void insere_bolsista_ordenado(Bolsista ** bolsistas, Bolsista * novo_bolsista);
+
+int auxiliar_excluir_bolsista_por_nome(Bolsista **bolsistas, char *nome_bolsista);
+
 int verifica_cpf_existente(char *CPF, Bolsista *bolsistas);
+
+void listar_bolsistas(Bolsista *bolsistas);
 
 Bolsista *edita_dados_bolsista(Bolsista *bolsistas);
 
 Bolsista *auxiliar_buscar_bolsista_por_nome(Bolsista *bolsistas, char *nome_bolsista);
 
 void auxiliar_excluir_bolsas(Bolsista ** bolsistas);
-
-int auxiliar_buscar_bolsista_por_matricula(Bolsista *bolsistas, long int matricula);
 
 Bolsista *auxiliar_buscar_bolsista_por_matricula(Bolsista *bolsistas, long int matricula);
 

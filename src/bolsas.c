@@ -74,12 +74,62 @@ void insere_bolsa(Bolsa **bolsas)
     printf("Informe a data de termino\nFormato: DD MM AAAA\n");
     scanf("%d %d %d", &nova_bolsa->termino.dia, &nova_bolsa->termino.mes, &nova_bolsa->termino.ano);
 
-    // a nova bolsa aponta para a lista existente de bolsas
-    nova_bolsa->proxima_bolsa = *bolsas;
+    insere_bolsa_ordenada(bolsas, nova_bolsa);
+    
     printf("%s Adicionada com sucesso!\n", nome_bolsa);
-    // retorna a nova cabeça da lista
-    *bolsas = nova_bolsa;
 }
+
+
+void insere_bolsa_ordenada(Bolsa **bolsas, Bolsa *nova_bolsa){
+    Bolsa *count = *bolsas;
+    Bolsa *ant = NULL;
+
+    // Se a lista estiver vazia ou se a nova bolsa deve ser inserida no início
+    if (count == NULL || strcmp(nova_bolsa->nome_bolsa, count->nome_bolsa) < 0)
+    {
+        nova_bolsa->proxima_bolsa = count;
+        *bolsas = nova_bolsa;
+        return;
+    }
+    else
+    {
+        // Percorre a lista até encontrar a posição correta para inserir
+        while (count != NULL && strcmp(nova_bolsa->nome_bolsa, count->nome_bolsa) > 0)
+        {
+            ant = count;
+            count = count->proxima_bolsa;
+        }
+
+        // Insere a nova bolsa na posição correta
+        nova_bolsa->proxima_bolsa = count;
+        ant->proxima_bolsa = nova_bolsa;
+        
+    }
+}
+
+//função para ler as bolsas em ordem correta
+void ler_bolsa_no_final(Bolsa ** bolsas, Bolsa * nova_bolsa){
+    Bolsa * count = *bolsas;
+
+    //se lista estiver vazia, a nova bolsa sera a primeira
+    if(count == NULL){
+        *bolsas = nova_bolsa;
+        nova_bolsa->proxima_bolsa = NULL;
+        return;
+    }
+    //percorre a lista ate o final
+    while(count->proxima_bolsa != NULL){
+        count = count->proxima_bolsa;
+    }
+
+    //insere a nova bolsa no final da lista
+    if(count->proxima_bolsa == NULL){
+        count->proxima_bolsa = nova_bolsa;
+        nova_bolsa->proxima_bolsa = NULL;
+        return;
+    }
+}
+
 
 //função para excluir uma bolsa
 void excluir_bolsas(Bolsa ** bolsas){
@@ -142,7 +192,7 @@ void excluir_bolsista_por_nome(Bolsa **bolsas)
     do{
         printf("Informe o nome do bolsista:\n");
         scanf(" %[^\n]", nome_bolsista);
-        verifica_caracter(nome_bolsista);
+        verificador = verifica_caracter(nome_bolsista);
     }while(verificador == FALHA);
 
     transforma_caracter_padrao(nome_bolsista);
@@ -223,13 +273,12 @@ void menu_busca_bolsista(Bolsa **bolsas)
 }
 
 // função para buscar um bolsista por nome
-Bolsa *buscar_bolsista_por_nome(Bolsa **bolsas)
+void buscar_bolsista_por_nome(Bolsa **bolsas)
 {
-    Bolsa *count = *bolsas;
     // caso nao tenha nenhuma bolsa cadastrada
     if (bolsa_vazia(*bolsas) == FALHA)
     {
-        return NULL;
+        return;
     }
 
     char nome_bolsista[40];
@@ -250,26 +299,18 @@ Bolsa *buscar_bolsista_por_nome(Bolsa **bolsas)
         bolsista_encontrado = auxiliar_buscar_bolsista_por_nome(count->bolsistas, nome_bolsista);
         count = count->proxima_bolsa;
     }
-    // caso nao encontre o bolsista
-    if (bolsista_encontrado != NULL)
-    {
-        return bolsista_encontrado;
-    }
-    // caso encontre retorna para o menu
-    else
-    {
-        return NULL;
-    }
+    
+    
 }
 
-Bolsa *buscar_bolsista_por_matricula(Bolsa **bolsas)
+void buscar_bolsista_por_matricula(Bolsa **bolsas)
 {
     Bolsa *count = *bolsas;
 
-    if (bolsa_vazia(*bolsas) == NULL)
+    if (bolsa_vazia(*bolsas) == FALHA)
     {
         printf("Nao há bolsas cadastradas.");
-        return NULL;
+        return;
     }
 
     long int matricula;
@@ -282,14 +323,8 @@ Bolsa *buscar_bolsista_por_matricula(Bolsa **bolsas)
         bolsista_encontrado = auxiliar_buscar_bolsista_por_matricula(count->bolsistas, matricula);
         count = count->proxima_bolsa;
     }
-    if (bolsista_encontrado != FALHA)
-    {
-        return bolsista_encontrado;
-    }
-    else
-    {
-        return NULL;
-    }
+    
+    return;
 }
 
 Bolsa *busca_bolsa(char *nome_bolsa, Bolsa *bolsas)
@@ -421,9 +456,10 @@ void ler_bolsa_arquivo(FILE **banco_de_dados, Bolsa **bolsas)
                 printf("Memoria Insuficiente!\n");
                 exit(1);
             }
-            nova_bolsa->proxima_bolsa = *bolsas;
-            *bolsas = nova_bolsa;
+            nova_bolsa->proxima_bolsa = NULL;
             nova_bolsa->bolsistas = NULL;
+
+            ler_bolsa_no_final(bolsas, nova_bolsa);//adicionar as bolsas em ordem correta
         }
 
         // escaneia todas as informações das bolsas

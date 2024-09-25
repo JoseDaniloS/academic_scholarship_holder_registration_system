@@ -63,8 +63,33 @@ void adiciona_bolsista(Bolsista **bolsistas, char *nome_bolsa)
     novo_bolsista->matricula = matricula;
 
     // vinculando a lista de bolsistas da bolsa
-    novo_bolsista->proximo_bolsista = *bolsistas;
-    *bolsistas = novo_bolsista;
+    insere_bolsista_ordenado(bolsistas, novo_bolsista);//inserir um bolsista ordenado
+}
+
+//função para adicionar um bolsista em ordem correta
+void insere_bolsista_ordenado(Bolsista ** bolsistas, Bolsista * novo_bolsista){
+    Bolsista * count = *bolsistas;
+    Bolsista * ant = NULL;
+
+    // Se a lista estiver vazia ou se o novo bolsista deve ser inserida no início
+    if(count == NULL || strcmp(novo_bolsista->nome_completo, count->nome_completo) < 0){
+        novo_bolsista->proximo_bolsista = count;
+        *bolsistas = novo_bolsista;
+        return;
+    }
+    else{
+        // Percorre a lista até encontrar a posição correta para inserir
+        while(count != NULL && strcmp(novo_bolsista->nome_completo, count->nome_completo) > 0){
+            ant = count;
+            count = count->proximo_bolsista;
+        }
+
+        // Insere a nova bolsa na posição correta
+        novo_bolsista->proximo_bolsista = count;
+        ant->proximo_bolsista = novo_bolsista;
+        
+    }
+
 }
 // função para buscar um bolsista em uma bolsa
 Bolsista *auxiliar_buscar_bolsista_por_nome(Bolsista *bolsistas, char *nome_bolsista)
@@ -114,7 +139,7 @@ Bolsista *auxiliar_buscar_bolsista_por_matricula(Bolsista *bolsistas, long int m
             printf("Curso: %s\n", count->curso);
             printf("CPF: %s\n", count->CPF);
             printf("Bolsa Associada: %s\n\n", count->bolsa_associada);
-            return SUCESSO;
+            return count;
         }
         count = count->proximo_bolsista;
     }
