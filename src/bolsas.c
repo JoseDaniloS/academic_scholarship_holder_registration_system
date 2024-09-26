@@ -557,14 +557,14 @@ void edita_dados_bolsista(Bolsa **bolsas)
     {
         printf("Informe o nome do Bolsista:\n");
         scanf(" %[^\n]", nome_bolsista);
-        verifica_caracter(nome_bolsista);
+        verificador = verifica_caracter(nome_bolsista);
     } while (verificador == FALHA);
 
     transforma_caracter_padrao(nome_bolsista);
 
     Bolsa *count = *bolsas;
     Bolsista *bolsista_encontrado;
-    while (count != NULL && bolsista_encontrado != NULL)
+    while (count != NULL && bolsista_encontrado == NULL)
     {
         bolsista_encontrado = auxiliar_buscar_bolsista_por_nome(count->bolsistas, nome_bolsista);
         count = count->proxima_bolsa;
