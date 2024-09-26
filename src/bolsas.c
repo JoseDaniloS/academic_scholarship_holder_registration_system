@@ -35,7 +35,7 @@ void insere_bolsa(Bolsa **bolsas)
 
         printf("Informe o nome da bolsa:\n");
         scanf(" %[^\n]", nome_bolsa);
-
+        fflush(stdin);
         if (strlen(nome_bolsa) >= MAX_BOLSA)
         {
             printf("Nome muito grande!Digite Novamente.\n");
@@ -160,7 +160,7 @@ void excluir_bolsas(Bolsa **bolsas)
     {
         printf("Informe o nome da Bolsa:\n");
         scanf(" %[^\n]", nome_bolsa);
-
+        fflush(stdin);
         if (strlen(nome_bolsa) >= MAX_BOLSA)
         {
             printf("Nome muito grande!Digite Novamente.\n");
@@ -220,7 +220,7 @@ void excluir_bolsista_por_nome(Bolsa **bolsas)
     {
         printf("Informe o nome do bolsista:\n");
         scanf(" %[^\n]", nome_bolsista);
-
+        fflush(stdin);
         if (strlen(nome_bolsista) >= MAX)
         {
             printf("Nome muito grande!Digite novamente.\n");
@@ -327,7 +327,7 @@ void buscar_bolsista_por_nome(Bolsa **bolsas)
     {
         printf("Informe o nome do Bolsista:\n");
         scanf(" %[^\n]", nome_bolsista);
-
+        fflush(stdin);
         if (strlen(nome_bolsista) >= MAX)
         {
             printf("Nome muito grande!Digite Novamente.\n");
@@ -470,6 +470,7 @@ void adiciona_bolsista_na_bolsa(Bolsa **bolsas)
     {
         printf("Informe a Bolsa que o Aluno vai ser Vinculado:\n");
         scanf(" %[^\n]", nome_bolsa);
+        fflush(stdin);//limpa buffer
         if (strlen(nome_bolsa) >= MAX_BOLSA)
         {
             printf("Nome muito grande! Digite Novamente.\n");
@@ -618,7 +619,8 @@ void edita_dados_bolsista(Bolsa **bolsas)
             {
                 printf("Informe o nome do Bolsista:\n");
                 scanf(" %[^\n]", nome_bolsista);
-
+                fflush(stdin);
+                
                 if (strlen(nome_bolsista) >= MAX)
                 {
                     printf("Nome muito grande! Digite Novamente.\n");

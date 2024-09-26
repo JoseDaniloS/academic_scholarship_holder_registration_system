@@ -155,4 +155,3 @@ char * transforma_caracter_padrao(char * nome){
 
     return nome;
 }
-

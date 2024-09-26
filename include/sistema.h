@@ -22,4 +22,6 @@ int verifica_caracter(char * nome);
 
 char * transforma_caracter_padrao(char * nome);
 
+void limpar_buffer();
+
 #endif // SYSTEM_H
