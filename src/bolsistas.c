@@ -47,8 +47,11 @@ void adiciona_bolsista(Bolsista **bolsistas, char *nome_bolsa)
 
     transforma_caracter_padrao(curso); // conserta o nome para um padrao
 
-    printf("Informe a Matricula:\n");
-    scanf("%ld", &matricula);
+    do
+    {
+        printf("Informe a Matricula:\n");
+        scanf("%ld", &matricula);
+    } while (verifica_matricula_existente(matricula, *bolsistas));
     // função que verifica matricula
 
     do
@@ -309,6 +312,21 @@ int verifica_cpf_existente(char *CPF, Bolsista *bolsistas)
 
     // cpf ainda nao cadastrado
     return SUCESSO;
+}
+
+int verifica_matricula_existente(long int matricula, Bolsista *bolsistas)
+{
+    Bolsista *count = bolsistas;
+    while (count != NULL)
+    {
+        if (count->matricula == matricula)
+        {
+            printf("Matricula ja esta cadastrada");
+            return FALHA;
+        }
+
+        return SUCESSO;
+    }
 }
 
 // função para verificar que um bolsista ja foi cadastrado na bolsa
