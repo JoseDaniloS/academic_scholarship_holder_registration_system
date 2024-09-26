@@ -6,10 +6,16 @@ Data de Inicio: 22/22/2222
 Data de Termino: 22/22/2222
 
 BOLSISTAS:
-Bolsista: Jose Danilo
+Bolsista: Arthur
 Matricula: 12983
-Curso: Tecnologia Da Informacao
-CPF:12345678910
+Curso: 70
+CPF: 108.216.263-70
+Bolsa Associada: Academica
+
+Bolsista: Pedro
+Matricula: 12983
+Curso: Ti
+CPF: 123.456.789-10
 Bolsa Associada: Academica
 
 ===============================

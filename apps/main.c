@@ -15,14 +15,16 @@ int main(void)
 {
     int opcao;
     Bolsa *bolsas;
+    char c_numero[2];
     FILE *arquivo = Verificacao("../banco_de_dados/bolsas.txt", "rt");
     ler_bolsa_arquivo(&arquivo, &bolsas);
     fclose(arquivo);
 
     do
-    {
+    {   
         menu_de_opcoes();
-        scanf("%d", &opcao);
+        scanf("%s", c_numero);
+        opcao = verifica_inteiro(c_numero);
         switch (opcao)
         {
         case 1:

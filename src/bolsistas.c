@@ -23,7 +23,7 @@ void adiciona_bolsista(Bolsista **bolsistas, char *nome_bolsa)
         printf("Memoria Insuficiente!\n");
         exit(1);
     }
-    char nome_bolsista[MAX], curso[50], CPF[12];
+    char nome_bolsista[MAX], curso[50], CPF[TAMANHO_CPF + 1];
     long int matricula;
     int verificador = FALHA, verificador2 = FALHA;
 
@@ -36,6 +36,12 @@ void adiciona_bolsista(Bolsista **bolsistas, char *nome_bolsa)
         transforma_caracter_padrao(nome_bolsista); // conserta o nome para um padrao
         verificador2 = verifica_bolsista_existente(*bolsistas, nome_bolsista);
 
+        if (strlen(nome_bolsista)>= MAX)
+        {
+            printf("Nome muito grande!Digite Novamente\n");
+            verificador = FALHA;
+        }
+
     } while (verificador == FALHA || verificador2 == FALHA);
 
     do
@@ -43,9 +49,14 @@ void adiciona_bolsista(Bolsista **bolsistas, char *nome_bolsa)
         printf("Informe o Curso:\n");
         scanf(" %[^\n]", curso);
         verificador = verifica_caracter(curso);
-    } while (verificador == FALHA);
+        transforma_caracter_padrao(curso); // conserta o nome para um padrao
 
-    transforma_caracter_padrao(curso); // conserta o nome para um padrao
+        if (strlen(curso) >= 50)
+        {
+            printf("Nome muito grande!Digite Novamente\n");
+            verificador = FALHA;
+        }
+    } while (verificador == FALHA);
 
     printf("Informe a Matricula:\n");
     scanf("%ld", &matricula);
@@ -53,7 +64,7 @@ void adiciona_bolsista(Bolsista **bolsistas, char *nome_bolsa)
 
     do
     {
-        printf("Informe o CPF(11 digitos):\n");
+        printf("Informe o CPF: (FORMATO: 000.000.000-00)\n");
         scanf(" %[^\n]", CPF);
     } while (verifica_cpf_existente(CPF, *bolsistas) == FALHA || verifica_cpf_valido(CPF) == FALHA);
 
@@ -160,6 +171,7 @@ void auxiliar_editar_bolsista(Bolsista *bolsista_encontrado, Bolsista *bolsistas
     long int matricula;
     do
     {
+        printf("MENU DE EDICAO:\n");
         printf("1 - Editar Nome. \n");
         printf("2 - Editar Curso.\n");
         printf("3 - Editar Matricula.\n");
@@ -168,60 +180,72 @@ void auxiliar_editar_bolsista(Bolsista *bolsista_encontrado, Bolsista *bolsistas
         scanf("%s", c_numero);
         opcao = verifica_inteiro(c_numero);
 
-        switch (opcao){
-            case 1:
-                do
-                {
-                    printf("Digite o novo nome:\n");
-                    scanf(" %[^\n]", nome_bolsista);
-                    verificador = verifica_caracter(nome_bolsista);
-                    transforma_caracter_padrao(nome_bolsista); // conserta o nome para um padrao
-                    verificador2 = verifica_bolsista_existente(bolsistas, nome_bolsista);
+        switch (opcao)
+        {
+        case 1:
+            do
+            {
+                printf("Digite o novo nome:\n");
+                scanf(" %[^\n]", nome_bolsista);
+                verificador = verifica_caracter(nome_bolsista);
+                transforma_caracter_padrao(nome_bolsista); // conserta o nome para um padrao
+                verificador2 = verifica_bolsista_existente(bolsistas, nome_bolsista);
 
-                } while (verificador == FALHA || verificador2 == FALHA);
-                strcpy(bolsista_encontrado->nome_completo, nome_bolsista);
-                if(strcmp(bolsista_encontrado->nome_completo, nome_bolsista) == 0){
-                    printf("Nome alterado para %s\n", nome_bolsista);
+                if (strlen(nome_bolsista) >= MAX )
+                {
+                    printf("Nome muito grande!Digite Novamente\n");
+                    verificador = FALHA;
                 }
-                break;
 
-            case 2:
-                do
+            } while (verificador == FALHA || verificador2 == FALHA);
+
+            strcpy(bolsista_encontrado->nome_completo, nome_bolsista);
+            printf("Nome alterado para %s\n", nome_bolsista);
+
+            break;
+
+        case 2:
+            do
+            {
+                printf("Informe o novo nome do curso:\n");
+                scanf(" %[^\n]", curso);
+                verificador = verifica_caracter(curso);
+                transforma_caracter_padrao(curso); // conserta o nome para um padrao
+
+                if (strlen(curso) >= 50)
                 {
-                    printf("Informe o novo nome do curso:\n");
-                    scanf(" %[^\n]", curso);
-                    verificador = verifica_caracter(curso);
-                    transforma_caracter_padrao(curso); // conserta o nome para um padrao
-                    verificador2 = verifica_bolsista_existente(bolsistas, curso);
+                    printf("Nome muito grande!Digite Novamente\n");
+                    verificador = FALHA;
+                }
 
-                } while (verificador == FALHA || verificador2 == FALHA);
-                
-                strcpy(bolsista_encontrado->curso, curso);
-                break;
-            case 3:
+            } while (verificador == FALHA);
 
-                printf("Informe a nova matricula:\n");
-                scanf("%ld", &matricula);
-                // fazer verificação de matriculas
-                bolsista_encontrado->matricula = matricula;
-                break;
+            strcpy(bolsista_encontrado->curso, curso);
+            break;
+        case 3:
 
-            case 4:
-                do
-                {
-                    printf("Informe o novo CPF (11 digitos):\n");
-                    scanf(" %[^\n]", novo_cpf);
-                } while (verifica_cpf_existente(novo_cpf, bolsistas) == FALHA || verifica_cpf_valido(novo_cpf) == FALHA);
+            printf("Informe a nova matricula:\n");
+            scanf("%ld", &matricula);
+            // fazer verificação de matriculas
+            bolsista_encontrado->matricula = matricula;
+            break;
 
-                strcpy(bolsista_encontrado->CPF, novo_cpf);
-                break;
-            case 5:
-                printf("Voltando ao menu!\n");
-                break;
+        case 4:
+            do
+            {
+                printf("Informe o CPF: (FORMATO: 000.000.000-00)\n");   
+                scanf(" %[^\n]", novo_cpf);
+            } while (verifica_cpf_existente(novo_cpf, bolsistas) == FALHA || verifica_cpf_valido(novo_cpf) == FALHA);
 
-            default:
-                printf("Opcao Invalida! Por favor, escolha entre 1 e 5\n");
-                break;
+            strcpy(bolsista_encontrado->CPF, novo_cpf);
+            break;
+        case 5:
+            printf("Voltando ao menu!\n");
+            break;
+
+        default:
+            printf("Opcao Invalida! Por favor, escolha entre 1 e 5\n");
+            break;
         }
     } while (opcao != 5);
 }
@@ -331,6 +355,7 @@ int verifica_bolsista_existente(Bolsista *bolsistas, char *nome_bolsista)
             printf("Bolsista %s ja cadastrado!\n", nome_bolsista);
             return FALHA; // bolsita ja cadastrado
         }
+        count = count->proximo_bolsista;
     }
     // bolsista nao cadastrado
     return SUCESSO;
@@ -426,7 +451,7 @@ void insere_bolsista_arquivo(FILE **banco_de_dados, Bolsista *bolsistas)
         fprintf(*banco_de_dados, "Bolsista: %s\n", count->nome_completo);
         fprintf(*banco_de_dados, "Matricula: %ld\n", count->matricula);
         fprintf(*banco_de_dados, "Curso: %s\n", count->curso);
-        fprintf(*banco_de_dados, "CPF:%s\n", count->CPF);
+        fprintf(*banco_de_dados, "CPF: %14s\n", count->CPF);
         fprintf(*banco_de_dados, "Bolsa Associada: %s\n\n", count->bolsa_associada);
 
         count = count->proximo_bolsista;

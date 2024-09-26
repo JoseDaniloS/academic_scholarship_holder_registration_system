@@ -35,9 +35,18 @@ void insere_bolsa(Bolsa **bolsas)
 
         printf("Informe o nome da bolsa:\n");
         scanf(" %[^\n]", nome_bolsa);
-        verificador = verifica_caracter(nome_bolsa);
-        transforma_caracter_padrao(nome_bolsa);
-        verificador2 = verifica_bolsa_existente(*bolsas, nome_bolsa);
+
+        if (strlen(nome_bolsa) >= MAX_BOLSA)
+        {
+            printf("Nome muito grande!Digite Novamente.\n");
+            verificador = FALHA;
+        }
+        else
+        {
+            verificador = verifica_caracter(nome_bolsa);
+            transforma_caracter_padrao(nome_bolsa);
+            verificador2 = verifica_bolsa_existente(*bolsas, nome_bolsa);
+        }
 
     } while (verificador == FALHA || verificador2 == FALHA);
 
@@ -142,7 +151,7 @@ void excluir_bolsas(Bolsa **bolsas)
         return;
     }
 
-    int verificacao = FALHA;
+    int verificador = FALHA;
     char nome_bolsa[MAX_BOLSA];
     Bolsa *count = *bolsas;
     Bolsa *ant = NULL;
@@ -151,9 +160,18 @@ void excluir_bolsas(Bolsa **bolsas)
     {
         printf("Informe o nome da Bolsa:\n");
         scanf(" %[^\n]", nome_bolsa);
-        verificacao = verifica_caracter(nome_bolsa);
 
-    } while (verificacao == FALHA);
+        if (strlen(nome_bolsa) >= MAX_BOLSA)
+        {
+            printf("Nome muito grande!Digite Novamente.\n");
+            verificador = FALHA;
+        }
+        else
+        {
+            verificador = verifica_caracter(nome_bolsa);
+        }
+
+    } while (verificador == FALHA);
 
     transforma_caracter_padrao(nome_bolsa);
 
@@ -202,7 +220,16 @@ void excluir_bolsista_por_nome(Bolsa **bolsas)
     {
         printf("Informe o nome do bolsista:\n");
         scanf(" %[^\n]", nome_bolsista);
-        verificador = verifica_caracter(nome_bolsista);
+
+        if (strlen(nome_bolsista) >= MAX)
+        {
+            printf("Nome muito grande!Digite novamente.\n");
+            verificador = FALHA;
+        }
+        else
+        {
+            verificador = verifica_caracter(nome_bolsista);
+        }
     } while (verificador == FALHA);
 
     transforma_caracter_padrao(nome_bolsista);
@@ -255,7 +282,7 @@ void menu_busca_bolsista(Bolsa **bolsas)
     }
 
     char c_numero[2];
-    int opcao = 0;
+    int opcao;
 
     do
     {
@@ -294,13 +321,22 @@ void buscar_bolsista_por_nome(Bolsa **bolsas)
         return;
     }
 
-    char nome_bolsista[40];
+    char nome_bolsista[MAX];
     int verificador = FALHA;
     do
     {
         printf("Informe o nome do Bolsista:\n");
         scanf(" %[^\n]", nome_bolsista);
-        verifica_caracter(nome_bolsista);
+
+        if (strlen(nome_bolsista) >= MAX)
+        {
+            printf("Nome muito grande!Digite Novamente.\n");
+            verificador = FALHA;
+        }
+        else
+        {
+            verifica_caracter(nome_bolsista);
+        }
     } while (verificador == FALHA);
 
     transforma_caracter_padrao(nome_bolsista);
@@ -433,7 +469,15 @@ void adiciona_bolsista_na_bolsa(Bolsa **bolsas)
     {
         printf("Informe a Bolsa que o Aluno vai ser Vinculado:\n");
         scanf(" %[^\n]", nome_bolsa);
-        verificador = verifica_caracter(nome_bolsa);
+        if (strlen(nome_bolsa) >= MAX_BOLSA)
+        {
+            printf("Nome muito grande! Digite Novamente.\n");
+            verificador = FALHA;
+        }
+        else
+        {
+            verificador = verifica_caracter(nome_bolsa);
+        }
     } while (verificador == FALHA);
 
     transforma_caracter_padrao(nome_bolsa);
@@ -550,25 +594,100 @@ void edita_dados_bolsista(Bolsa **bolsas)
     {
         return;
     }
+    char c_numero[2], nome_bolsista[40];
+    int opcao, verificador = FALHA;
+    Bolsa *count = *bolsas;
+    Bolsista *bolsista_encontrado = NULL;
+    long int matricula;
 
-    char nome_bolsista[40];
-    int verificador = FALHA;
     do
     {
-        printf("Informe o nome do Bolsista:\n");
-        scanf(" %[^\n]", nome_bolsista);
-        verificador = verifica_caracter(nome_bolsista);
-    } while (verificador == FALHA);
+        printf("1 - Buscar Bolsista por Nome:\n");
+        printf("2 - Buscar Bolsista por Matricula:\n");
+        printf("3 - Sair..\n");
+        scanf("%s", c_numero);
+        opcao = verifica_inteiro(c_numero);
 
-    transforma_caracter_padrao(nome_bolsista);
+        switch (opcao)
+        {
+        case 1:
 
-    Bolsa *count = *bolsas;
-    Bolsista *bolsista_encontrado;
-    while (count != NULL && bolsista_encontrado == NULL)
-    {
-        bolsista_encontrado = auxiliar_buscar_bolsista_por_nome(count->bolsistas, nome_bolsista);
-        count = count->proxima_bolsa;
-    }
-    auxiliar_editar_bolsista(bolsista_encontrado,count->bolsistas);
+            // Solicita o nome do bolsista e valida
+            do
+            {
+                printf("Informe o nome do Bolsista:\n");
+                scanf(" %[^\n]", nome_bolsista);
+
+                if (strlen(nome_bolsista) >= MAX)
+                {
+                    printf("Nome muito grande! Digite Novamente.\n");
+                    verificador = FALHA;
+                }
+                else
+                {
+                    verificador = verifica_caracter(nome_bolsista);
+                }
+            } while (verificador == FALHA);
+
+            transforma_caracter_padrao(nome_bolsista);
+
+            // Busca pelo bolsista em todas as bolsas
+            while (count != NULL)
+            {
+                bolsista_encontrado = auxiliar_buscar_bolsista_por_nome(count->bolsistas, nome_bolsista);
+
+                // Se o bolsista for encontrado, interrompe a busca
+                if (bolsista_encontrado != NULL)
+                {
+                    break;
+                }
+
+                count = count->proxima_bolsa;
+            }
+            // Se o bolsista for encontrado, chama a função de edição
+            if (bolsista_encontrado != NULL)
+            {
+                auxiliar_editar_bolsista(bolsista_encontrado, count->bolsistas);
+            }
+            else
+            {
+                printf("Bolsista %s não encontrado!\n", nome_bolsista);
+            }
+            break;
+        case 2:
+
+            printf("Informe a matricula do bolsista:\n");
+            scanf("%ld", &matricula);
+
+            // Busca pelo bolsista em todas as bolsas
+            while (count != NULL)
+            {
+                bolsista_encontrado = auxiliar_buscar_bolsista_por_matricula(count->bolsistas, matricula);
+
+                // Se o bolsista for encontrado, interrompe a busca
+                if (bolsista_encontrado != NULL)
+                {
+                    break;
+                }
+
+                count = count->proxima_bolsa;
+            }
+            // Se o bolsista for encontrado, chama a função de edição
+            if (bolsista_encontrado != NULL)
+            {
+                auxiliar_editar_bolsista(bolsista_encontrado, count->bolsistas);
+            }
+            else
+            {
+                printf("Bolsista %s não encontrado!\n", nome_bolsista);
+            }
+            break;
+        case 3:
+            printf("Voltando ao menu anterior...\n");
+            break;
+        default:
+            printf("Opcao Invalida! Por favor, escolha entre 1 e 3.\n");
+            break;
+        }
+    } while (opcao != 3);
 }
-

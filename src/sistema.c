@@ -33,19 +33,34 @@ FILE * Verificacao(char * nome, char * modo){
     return arquivo;
 }
 
-//função para verificar se o cpf é valido
 int verifica_cpf_valido(char * cpf){
 
-    if(strlen(cpf) != TAMANHO_CPF){
-        printf("CPF deve conter exatamente 11 digitos.\nDigite Novamente.\n");
+    //verifica se o cpf está no formato 000.000.000-00
+    if (strlen(cpf) != 14 || 
+        !isdigit(cpf[0]) || !isdigit(cpf[1]) || !isdigit(cpf[2]) || cpf[3] != '.' ||
+        !isdigit(cpf[4]) || !isdigit(cpf[5]) || !isdigit(cpf[6]) || cpf[7] != '.' ||
+        !isdigit(cpf[8]) || !isdigit(cpf[9]) || !isdigit(cpf[10]) || cpf[11] != '-' ||
+        !isdigit(cpf[12]) || !isdigit(cpf[13])) {
+        
+        printf("CPF deve estar no formato 000.000.000-00.\nDigite Novamente.\n");
         return FALHA;
     }
-    
-    for(int i = 0; i < TAMANHO_CPF; i++){
-        if(!isdigit(cpf[i])){
-            printf("CPF deve conter apenas numeros.\nDigite Novamente.\n");
-            return FALHA;
+
+    char cpf_sem_formato[TAMANHO_CPF + 1]; // Array para CPF sem formatação
+    int j = 0;
+
+    // Remove formatações
+    for(int i = 0; cpf[i] != '\0'; i++){
+        if(isdigit(cpf[i])){
+            cpf_sem_formato[j++] = cpf[i];
         }
+    }
+    cpf_sem_formato[j] = '\0'; //termina a string
+
+    // Verifica o tamanho e se contém apenas números
+    if(strlen(cpf_sem_formato) != TAMANHO_CPF){
+        printf("CPF deve conter exatamente 11 digitos.\nDigite Novamente.\n");
+        return FALHA;
     }
 
     return SUCESSO;
