@@ -34,7 +34,7 @@ int main(void)
             limpar_tela();
             break;
         case 2:
-
+        
             printf("Adicionando Bolsista...\n");
             adiciona_bolsista_na_bolsa(&bolsas);
             Verificacao("../banco_de_dados/bolsas.txt", "w");

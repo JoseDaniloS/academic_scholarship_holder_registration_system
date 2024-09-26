@@ -8,7 +8,7 @@ typedef struct data Data;
 
 typedef struct bolsa Bolsa;
 
-// Funções para manipulação de bolsas
+// Funções para manipulação de bolsas;
 void insere_bolsa(Bolsa** bolsas);
 
 void insere_bolsa_ordenada(Bolsa **bolsas, Bolsa *nova_bolsa);
@@ -40,5 +40,7 @@ int verifica_bolsa_existente(Bolsa * bolsas, char * nome_bolsa);
 void menu_busca_bolsista(Bolsa** bolsas);
 
 int bolsa_vazia(Bolsa* bolsas);
+
+void edita_dados_bolsista(Bolsa **bolsas);
 
 #endif // BOLSA_H

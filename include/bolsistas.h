@@ -18,7 +18,7 @@ int verifica_cpf_existente(char *CPF, Bolsista *bolsistas);
 
 void listar_bolsistas(Bolsista *bolsistas);
 
-Bolsista *edita_dados_bolsista(Bolsista *bolsistas);
+void auxiliar_editar_bolsista(Bolsista *bolsista_encontrado, Bolsista *bolsistas);
 
 Bolsista *auxiliar_buscar_bolsista_por_nome(Bolsista *bolsistas, char *nome_bolsista);
 
