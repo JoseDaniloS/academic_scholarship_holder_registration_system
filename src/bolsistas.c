@@ -62,7 +62,8 @@ void adiciona_bolsista(Bolsista **bolsistas, char *nome_bolsa)
     {
         printf("Informe a Matricula:\n");
         scanf("%ld", &matricula);
-    } while (verifica_matricula_existente(matricula, *bolsistas));
+        verificador = verifica_matricula_existente(matricula, *bolsistas);
+    } while (verificador == FALHA);
     // função que verifica matricula
 
     do

@@ -8,8 +8,14 @@ Data de Termino: 22/22/2222
 BOLSISTAS:
 Bolsista: Arthur
 Matricula: 12983
-Curso: 70
+Curso: Ti
 CPF: 108.216.263-70
+Bolsa Associada: Academica
+
+Bolsista: Bruno
+Matricula: 1
+Curso: 90
+CPF: 708.505.487-90
 Bolsa Associada: Academica
 
 Bolsista: Pedro

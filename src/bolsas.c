@@ -332,10 +332,11 @@ void buscar_bolsista_por_nome(Bolsa **bolsas)
         {
             printf("Nome muito grande!Digite Novamente.\n");
             verificador = FALHA;
+            
         }
         else
         {
-            verifica_caracter(nome_bolsista);
+            verificador = verifica_caracter(nome_bolsista);
         }
     } while (verificador == FALHA);
 

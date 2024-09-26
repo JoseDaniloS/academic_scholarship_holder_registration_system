@@ -16,6 +16,8 @@ int auxiliar_excluir_bolsista_por_nome(Bolsista **bolsistas, char *nome_bolsista
 
 int verifica_cpf_existente(char *CPF, Bolsista *bolsistas);
 
+int verifica_matricula_existente(long int matricula, Bolsista *bolsistas);
+
 void listar_bolsistas(Bolsista *bolsistas);
 
 void auxiliar_editar_bolsista(Bolsista *bolsista_encontrado, Bolsista *bolsistas);
