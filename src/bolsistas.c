@@ -200,6 +200,7 @@ void auxiliar_editar_bolsista(Bolsista *bolsista_encontrado, Bolsista *bolsistas
             {
                 printf("Digite o novo nome:\n");
                 scanf(" %[^\n]", nome_bolsista);
+                fflush(stdin);
                 verificador = verifica_caracter(nome_bolsista);
                 transforma_caracter_padrao(nome_bolsista); // conserta o nome para um padrao
                 verificador2 = verifica_bolsista_existente(bolsistas, nome_bolsista);
@@ -222,6 +223,7 @@ void auxiliar_editar_bolsista(Bolsista *bolsista_encontrado, Bolsista *bolsistas
             {
                 printf("Informe o novo nome do curso:\n");
                 scanf(" %[^\n]", curso);
+                fflush(stdin);
                 verificador = verifica_caracter(curso);
                 transforma_caracter_padrao(curso); // conserta o nome para um padrao
 
@@ -236,10 +238,12 @@ void auxiliar_editar_bolsista(Bolsista *bolsista_encontrado, Bolsista *bolsistas
             strcpy(bolsista_encontrado->curso, curso);
             break;
         case 3:
+            do{
+                printf("Informe a nova matricula:\n");
+                scanf("%ld", &matricula);
+                verificador = verifica_matricula_existente(matricula, bolsistas);
 
-            printf("Informe a nova matricula:\n");
-            scanf("%ld", &matricula);
-            // fazer verificação de matriculas
+            }while(verificador == FALHA);
             bolsista_encontrado->matricula = matricula;
             break;
 
@@ -248,6 +252,7 @@ void auxiliar_editar_bolsista(Bolsista *bolsista_encontrado, Bolsista *bolsistas
             {
                 printf("Informe o CPF: (FORMATO: 000.000.000-00)\n");
                 scanf(" %[^\n]", novo_cpf);
+                fflush(stdin);
             } while (verifica_cpf_existente(novo_cpf, bolsistas) == FALHA || verifica_cpf_valido(novo_cpf) == FALHA);
 
             strcpy(bolsista_encontrado->CPF, novo_cpf);
@@ -361,12 +366,13 @@ int verifica_matricula_existente(long int matricula, Bolsista *bolsistas)
     {
         if (count->matricula == matricula)
         {
-            printf("Matricula ja esta cadastrada");
+            printf("Matricula ja esta cadastrada\n");
             return FALHA;
         }
-
-        return SUCESSO;
+        count = count->proximo_bolsista;
+        
     }
+    return SUCESSO;
 }
 
 // função para verificar que um bolsista ja foi cadastrado na bolsa
