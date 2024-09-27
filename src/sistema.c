@@ -84,6 +84,28 @@ int verifica_inteiro(char * numero){
     return(numero_convertido);
 }
 
+int verifica_matricula_valida(char *numero)
+{
+    if(numero[0] == NULL){
+        return FALHA;
+    }
+    // verifica cada caractere da string se é um digito
+    for (int i = 0; numero[i] != '\0'; i++)
+    {
+        if (!isdigit(numero[i]))
+        {
+            return FALHA;
+        }
+    }
+    long numero_convertido = strtol(numero, NULL, 10);
+    if (!(numero >= 0 && numero <= 99999999))
+    {
+        return FALHA;
+    }
+    
+    return SUCESSO;
+}
+
 float verifica_float(char * numero) {
     int ponto_encontrado = 0;
 

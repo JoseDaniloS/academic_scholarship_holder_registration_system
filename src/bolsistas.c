@@ -24,7 +24,7 @@ void adiciona_bolsista(Bolsista **bolsistas, char *nome_bolsa)
         exit(1);
     }
     char nome_bolsista[MAX], curso[50], CPF[TAMANHO_CPF + 1];
-    long int matricula;
+    char matricula[9];
     int verificador = FALHA, verificador2 = FALHA;
 
     do
@@ -58,21 +58,23 @@ void adiciona_bolsista(Bolsista **bolsistas, char *nome_bolsa)
             printf("Nome muito grande!Digite Novamente\n");
             verificador = FALHA;
         }
-        else{
+        else
+        {
             verificador = verifica_caracter(curso);
             transforma_caracter_padrao(curso); // conserta o nome para um padrao
         }
-        
 
     } while (verificador == FALHA);
 
     do
     {
-        printf("Informe a Matricula:\n");
-        scanf("%ld", &matricula);
-        verificador = verifica_matricula_existente(matricula, *bolsistas);
-    } while (verificador == FALHA);
-    // função que verifica matricula
+        printf("Informe a Matricula (8 digitos):\n");
+        scanf(" %[^\n]", matricula);
+        verificador = verifica_matricula_valida(matricula);
+        long converte_matricula = strtol(matricula, NULL, 10);
+        verificador2 = verifica_matricula_existente(matricula, *bolsistas);
+
+    } while (verificador == FALHA || verificador2 == FALHA);
 
     do
     {
@@ -238,12 +240,13 @@ void auxiliar_editar_bolsista(Bolsista *bolsista_encontrado, Bolsista *bolsistas
             strcpy(bolsista_encontrado->curso, curso);
             break;
         case 3:
-            do{
+            do
+            {
                 printf("Informe a nova matricula:\n");
                 scanf("%ld", &matricula);
                 verificador = verifica_matricula_existente(matricula, bolsistas);
 
-            }while(verificador == FALHA);
+            } while (verificador == FALHA);
             bolsista_encontrado->matricula = matricula;
             break;
 
@@ -370,7 +373,6 @@ int verifica_matricula_existente(long int matricula, Bolsista *bolsistas)
             return FALHA;
         }
         count = count->proximo_bolsista;
-        
     }
     return SUCESSO;
 }
