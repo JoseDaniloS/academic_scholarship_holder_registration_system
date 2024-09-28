@@ -24,7 +24,8 @@ void adiciona_bolsista(Bolsista **bolsistas, char *nome_bolsa)
         exit(1);
     }
     char nome_bolsista[MAX], curso[50], CPF[TAMANHO_CPF + 1];
-    char matricula[9];
+    char matricula_bolsista[10];
+    long matricula_convertida;
     int verificador = FALHA, verificador2 = FALHA;
 
     do
@@ -69,12 +70,13 @@ void adiciona_bolsista(Bolsista **bolsistas, char *nome_bolsa)
     do
     {
         printf("Informe a Matricula (8 digitos):\n");
-        scanf(" %[^\n]", matricula);
-        verificador = verifica_matricula_valida(matricula);
-        long converte_matricula = strtol(matricula, NULL, 10);
-        verificador2 = verifica_matricula_existente(matricula, *bolsistas);
+        scanf(" %8[^\n]", matricula_bolsista);
+        verificador = verifica_matricula_valida(matricula_bolsista);
+        matricula_convertida = strtol(matricula_bolsista, NULL, 10);
+        verificador2 = verifica_matricula_existente(matricula_convertida, *bolsistas);
 
-    } while (verificador == FALHA || verificador2 == FALHA);
+        //não deixar que matricula menores ou maiores de 8 digitos passem
+    } while (verificador == FALHA && verificador2 == FALHA);
 
     do
     {
@@ -88,7 +90,7 @@ void adiciona_bolsista(Bolsista **bolsistas, char *nome_bolsa)
     strcpy(novo_bolsista->curso, curso);
     strcpy(novo_bolsista->bolsa_associada, nome_bolsa);
     strcpy(novo_bolsista->CPF, CPF);
-    novo_bolsista->matricula = matricula;
+    novo_bolsista->matricula = matricula_convertida;
 
     // vinculando a lista de bolsistas da bolsa
     insere_bolsista_ordenado(bolsistas, novo_bolsista); // inserir um bolsista ordenado

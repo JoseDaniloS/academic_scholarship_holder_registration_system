@@ -24,5 +24,11 @@ Curso: Ti
 CPF: 123.456.789-10
 Bolsa Associada: Academica
 
+Bolsista: Ruan
+Matricula: 3
+Curso: 32
+CPF: 032.003.775-32
+Bolsa Associada: Academica
+
 ===============================
 
