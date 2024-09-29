@@ -41,6 +41,8 @@ void menu_busca_bolsista(Bolsa** bolsas);
 
 int bolsa_vazia(Bolsa* bolsas);
 
+int verifica_data(Bolsa *nova_bolsa);
+
 void edita_dados_bolsista(Bolsa **bolsas);
 
 #endif // BOLSA_H

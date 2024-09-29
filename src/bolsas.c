@@ -77,15 +77,41 @@ void insere_bolsa(Bolsa **bolsas)
     nova_bolsa->proxima_bolsa = NULL;
 
     // Adiciona datas de início e término da bolsa
-    printf("Informe a data de inicio\nFormato: DD MM AAAA\n");
-    scanf("%d %d %d", &nova_bolsa->inicio.dia, &nova_bolsa->inicio.mes, &nova_bolsa->inicio.ano);
+    do
+    {
+        printf("Informe a data de inicio\nFormato: DD MM AAAA\n");
+        scanf("%d %d %d", &nova_bolsa->inicio.dia, &nova_bolsa->inicio.mes, &nova_bolsa->inicio.ano);
+        verificador = verifica_data(nova_bolsa);
+            
 
-    printf("Informe a data de termino\nFormato: DD MM AAAA\n");
-    scanf("%d %d %d", &nova_bolsa->termino.dia, &nova_bolsa->termino.mes, &nova_bolsa->termino.ano);
+        // printf("Informe a data de termino\nFormato: DD MM AAAA\n");
+        // scanf("%d %d %d", &nova_bolsa->termino.dia, &nova_bolsa->termino.mes, &nova_bolsa->termino.ano);
+    } while (verificador != SUCESSO);
 
     insere_bolsa_ordenada(bolsas, nova_bolsa);
 
     printf("%s Adicionada com sucesso!\n", nome_bolsa);
+}
+
+int verifica_data(Bolsa *nova_bolsa)
+{
+    // dia > 0 e dia <= 31
+    // mes > 0 e mes <= 12
+    // ano > 2024 e <= 2030
+    if (!(nova_bolsa->inicio.dia > 0 && nova_bolsa->inicio.dia <= 31))
+    {
+        return FALHA;
+    }
+    if (!(nova_bolsa->inicio.mes > 0 && nova_bolsa->inicio.mes <= 12))
+    {
+        return FALHA;
+    }
+    if (!(nova_bolsa->inicio.ano > 2024 && nova_bolsa->inicio.ano <= 2030))
+    {
+        return FALHA;
+    }
+
+    return SUCESSO;
 }
 
 void insere_bolsa_ordenada(Bolsa **bolsas, Bolsa *nova_bolsa)
@@ -332,7 +358,6 @@ void buscar_bolsista_por_nome(Bolsa **bolsas)
         {
             printf("Nome muito grande!Digite Novamente.\n");
             verificador = FALHA;
-            
         }
         else
         {
@@ -470,7 +495,7 @@ void adiciona_bolsista_na_bolsa(Bolsa **bolsas)
     {
         printf("Informe a Bolsa que o Aluno vai ser Vinculado:\n");
         scanf(" %[^\n]", nome_bolsa);
-        fflush(stdin);//limpa buffer
+        fflush(stdin); // limpa buffer
         if (strlen(nome_bolsa) >= MAX_BOLSA)
         {
             printf("Nome muito grande! Digite Novamente.\n");
@@ -620,7 +645,7 @@ void edita_dados_bolsista(Bolsa **bolsas)
                 printf("Informe o nome do Bolsista:\n");
                 scanf(" %[^\n]", nome_bolsista);
                 fflush(stdin);
-                
+
                 if (strlen(nome_bolsista) >= MAX)
                 {
                     printf("Nome muito grande! Digite Novamente.\n");

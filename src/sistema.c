@@ -104,7 +104,7 @@ int verifica_matricula_valida(char *numero)
         return FALHA;
     }
 
-       // verifica cada caractere da string se é um digito
+    // verifica cada caractere da string se é um digito
     for (int i = 0; numero[i] != '\0'; i++)
     {
         if (!isdigit(numero[i]))
