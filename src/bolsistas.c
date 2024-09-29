@@ -75,7 +75,7 @@ void adiciona_bolsista(Bolsista **bolsistas, char *nome_bolsa)
         matricula_convertida = strtol(matricula_bolsista, NULL, 10);
         verificador2 = verifica_matricula_existente(matricula_convertida, *bolsistas);
 
-        //não deixar que matricula menores ou maiores de 8 digitos passem
+        // não deixar que matricula menores ou maiores de 8 digitos passem
     } while (verificador == FALHA && verificador2 == FALHA);
 
     do
@@ -186,6 +186,8 @@ void auxiliar_editar_bolsista(Bolsista *bolsista_encontrado, Bolsista *bolsistas
     int verificador = FALHA, verificador2 = FALHA;
     char curso[50], nome_bolsista[MAX], novo_cpf[15];
     long int matricula;
+    char matricula_bolsista[10];
+    long matricula_convertida;
     do
     {
         printf("MENU DE EDICAO:\n");
@@ -245,11 +247,13 @@ void auxiliar_editar_bolsista(Bolsista *bolsista_encontrado, Bolsista *bolsistas
             do
             {
                 printf("Informe a nova matricula:\n");
-                scanf("%ld", &matricula);
-                verificador = verifica_matricula_existente(matricula, bolsistas);
+                scanf(" %8[^\n]", matricula_bolsista);
+                verificador = verifica_matricula_valida(matricula_bolsista);
+                matricula_convertida = strtol(matricula_bolsista, NULL, 10);
+                verificador2 = verifica_matricula_existente(matricula_convertida, bolsistas);
 
-            } while (verificador == FALHA);
-            bolsista_encontrado->matricula = matricula;
+            } while (verificador == FALHA || verificador2 == FALHA);
+            bolsista_encontrado->matricula = matricula_convertida;
             break;
 
         case 4:
