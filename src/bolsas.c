@@ -77,12 +77,16 @@ void insere_bolsa(Bolsa **bolsas)
     nova_bolsa->proxima_bolsa = NULL;
 
     // Adiciona datas de início e término da bolsa
+
     do
     {
         printf("Informe a data de inicio\nFormato: DD MM AAAA\n");
         scanf("%d %d %d", &nova_bolsa->inicio.dia, &nova_bolsa->inicio.mes, &nova_bolsa->inicio.ano);
+
         verificador = verifica_data(nova_bolsa);
-            
+        if(verificador == 0){
+            printf("Data invalida!\n");
+        }
 
         // printf("Informe a data de termino\nFormato: DD MM AAAA\n");
         // scanf("%d %d %d", &nova_bolsa->termino.dia, &nova_bolsa->termino.mes, &nova_bolsa->termino.ano);
@@ -95,18 +99,18 @@ void insere_bolsa(Bolsa **bolsas)
 
 int verifica_data(Bolsa *nova_bolsa)
 {
-    // dia > 0 e dia <= 31
-    // mes > 0 e mes <= 12
-    // ano > 2024 e <= 2030
+
     if (!(nova_bolsa->inicio.dia > 0 && nova_bolsa->inicio.dia <= 31))
     {
         return FALHA;
     }
+
     if (!(nova_bolsa->inicio.mes > 0 && nova_bolsa->inicio.mes <= 12))
     {
         return FALHA;
     }
-    if (!(nova_bolsa->inicio.ano > 2024 && nova_bolsa->inicio.ano <= 2030))
+
+    if (!(nova_bolsa->inicio.ano >= 2024 && nova_bolsa->inicio.ano <= 2030))
     {
         return FALHA;
     }

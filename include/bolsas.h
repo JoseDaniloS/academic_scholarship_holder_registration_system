@@ -11,6 +11,8 @@ typedef struct bolsa Bolsa;
 // Funções para manipulação de bolsas;
 void insere_bolsa(Bolsa** bolsas);
 
+int verifica_data(Bolsa *nova_bolsa);
+
 void insere_bolsa_ordenada(Bolsa **bolsas, Bolsa *nova_bolsa);
 
 Bolsa* busca_bolsa(char* nome_bolsa, Bolsa* bolsas);
@@ -41,7 +43,7 @@ void menu_busca_bolsista(Bolsa** bolsas);
 
 int bolsa_vazia(Bolsa* bolsas);
 
-int verifica_data(Bolsa *nova_bolsa);
+
 
 void edita_dados_bolsista(Bolsa **bolsas);
 
