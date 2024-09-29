@@ -83,21 +83,29 @@ void insere_bolsa(Bolsa **bolsas)
         printf("Informe a data de inicio\nFormato: DD MM AAAA\n");
         scanf("%d %d %d", &nova_bolsa->inicio.dia, &nova_bolsa->inicio.mes, &nova_bolsa->inicio.ano);
 
-        verificador = verifica_data(nova_bolsa);
-        if(verificador == 0){
+        verificador = verifica_data_inicio(nova_bolsa);
+        if (verificador == FALHA)
+        {
             printf("Data invalida!\n");
+            continue;
         }
 
-        // printf("Informe a data de termino\nFormato: DD MM AAAA\n");
-        // scanf("%d %d %d", &nova_bolsa->termino.dia, &nova_bolsa->termino.mes, &nova_bolsa->termino.ano);
-    } while (verificador != SUCESSO);
+        printf("Informe a data de termino\nFormato: DD MM AAAA\n");
+        scanf("%d %d %d", &nova_bolsa->termino.dia, &nova_bolsa->termino.mes, &nova_bolsa->termino.ano);
+        verificador2 = verifica_data_termino(nova_bolsa);
+        if (verificador2 == FALHA)
+        {
+            printf("Data de termino precisa ser maior que data de inicio!\n");
+        }
+
+    } while (verificador != SUCESSO || verificador2 != SUCESSO);
 
     insere_bolsa_ordenada(bolsas, nova_bolsa);
 
     printf("%s Adicionada com sucesso!\n", nome_bolsa);
 }
 
-int verifica_data(Bolsa *nova_bolsa)
+int verifica_data_inicio(Bolsa *nova_bolsa)
 {
 
     if (!(nova_bolsa->inicio.dia > 0 && nova_bolsa->inicio.dia <= 31))
@@ -111,6 +119,26 @@ int verifica_data(Bolsa *nova_bolsa)
     }
 
     if (!(nova_bolsa->inicio.ano >= 2024 && nova_bolsa->inicio.ano <= 2030))
+    {
+        return FALHA;
+    }
+
+    return SUCESSO;
+}
+
+int verifica_data_termino(Bolsa *nova_bolsa)
+{
+    if (nova_bolsa->termino.dia < nova_bolsa->inicio.dia)
+    {
+        return FALHA;
+    }
+
+    if (nova_bolsa->termino.mes < nova_bolsa->inicio.mes)
+    {
+        return FALHA;
+    }
+
+    if (nova_bolsa->termino.ano < nova_bolsa->inicio.ano)
     {
         return FALHA;
     }
