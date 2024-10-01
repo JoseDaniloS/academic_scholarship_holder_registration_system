@@ -1,21 +1,9 @@
 ===============================
 BOLSA:
-Tipo: Harry
+Tipo: Danilo
 Valor Mensal: 345.0
-Data de Inicio: 00/00/0000
-Data de Termino: 00/00/0000
-
-BOLSISTAS:
-Nenhum bolsista cadastrado!
-
-===============================
-
-===============================
-BOLSA:
-Tipo: Hermione
-Valor Mensal: 345.0
-Data de Inicio: 00/00/0000
-Data de Termino: 00/00/0000
+Data de Inicio: 23/04/2025
+Data de Termino: 23/04/2026
 
 BOLSISTAS:
 Nenhum bolsista cadastrado!

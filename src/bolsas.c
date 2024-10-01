@@ -32,6 +32,7 @@ void insere_bolsa(Bolsa **bolsas)
     int verificador_data_inicio = FALHA, verificador_data_termino = FALHA;
     int verifica_data1, verifica_data2, verifica_data2_termino;
     char datas[10];
+    Data inicio, termino;
 
     do
     {
@@ -83,7 +84,7 @@ void insere_bolsa(Bolsa **bolsas)
 
     do
     {
-        Data inicio, fim;
+        
         printf("Informe a data de inicio\nFormato: DD MM AAAA\n");
         scanf(" %[^\n]", datas);
         verifica_data1 = verifica_data(datas);
@@ -105,8 +106,8 @@ void insere_bolsa(Bolsa **bolsas)
                 printf("Data invalida!\n");
                 continue;
             }
-            sscanf(datas, "%d %d %d", &fim.dia, &fim.mes, &fim.ano);
-            verifica_data2_termino = verifica_data_termino(inicio, fim);
+            sscanf(datas, "%d %d %d", &termino.dia, &termino.mes, &termino.ano);
+            verifica_data2_termino = verifica_data_termino(inicio, termino);
             if (verifica_data2_termino == FALHA)
             {
                 printf("Data final precisa ser maior que data inicial!\n");
@@ -117,27 +118,29 @@ void insere_bolsa(Bolsa **bolsas)
 
     } while (verifica_data1 == FALHA);
 
+    nova_bolsa->inicio = inicio;
+    nova_bolsa->termino = termino;
     insere_bolsa_ordenada(bolsas, nova_bolsa);
 
     printf("%s Adicionada com sucesso!\n", nome_bolsa);
 }
 
-int verifica_data_termino(Data inicio, Data fim)
+int verifica_data_termino(Data inicio, Data termino)
 {
-    if (inicio.ano > fim.ano)
+    if (inicio.ano > termino.ano)
     {
         return FALHA;
     }
-    else if (inicio.ano == fim.ano)
+    else if (inicio.ano == termino.ano)
     {
-        if (inicio.mes > fim.mes)
+        if (inicio.mes > termino.mes)
         {
             return FALHA;
         }
     }
-    else if (inicio.mes == fim.mes)
+    else if (inicio.mes == termino.mes)
     {
-        if (inicio.dia > fim.dia)
+        if (inicio.dia > termino.dia)
         {
             return FALHA;
         }
