@@ -1,162 +1,8 @@
 ===============================
 BOLSA:
-Tipo: Academica
-Valor Mensal: 500.0
-Data de Inicio: 22/22/2222
-Data de Termino: 22/22/2222
-
-BOLSISTAS:
-Bolsista: Arthur
-Matricula: 5
-Curso: Ti
-CPF: 108.216.263-70
-Bolsa Associada: Academica
-
-Bolsista: Bruno
-Matricula: 1
-Curso: 90
-CPF: 708.505.487-90
-Bolsa Associada: Academica
-
-Bolsista: Pedro
-Matricula: 12983
-Curso: Ti
-CPF: 123.456.789-10
-Bolsa Associada: Academica
-
-Bolsista: Ruan
-Matricula: 34
-Curso: 32
-CPF: 032.003.775-32
-Bolsa Associada: Academica
-
-===============================
-
-===============================
-BOLSA:
-Tipo: Agoravai
-Valor Mensal: 456.0
-Data de Inicio: 05/05/2025
-Data de Termino: 1027423549/00/0000
-
-BOLSISTAS:
-Nenhum bolsista cadastrado!
-
-===============================
-
-===============================
-BOLSA:
-Tipo: Creche
-Valor Mensal: 599.0
-Data de Inicio: 34/34/3434
-Data de Termino: 00/00/0000
-
-BOLSISTAS:
-Nenhum bolsista cadastrado!
-
-===============================
-
-===============================
-BOLSA:
-Tipo: Durin
-Valor Mensal: 456.0
-Data de Inicio: 02/05/2026
-Data de Termino: 02/07/2026
-
-BOLSISTAS:
-Nenhum bolsista cadastrado!
-
-===============================
-
-===============================
-BOLSA:
-Tipo: Fariasbrito
-Valor Mensal: 567.0
-Data de Inicio: 05/06/2024
-Data de Termino: 171594561/17/0000
-
-BOLSISTAS:
-Nenhum bolsista cadastrado!
-
-===============================
-
-===============================
-BOLSA:
-Tipo: Frodo
-Valor Mensal: 666.0
-Data de Inicio: 05/04/2024
-Data de Termino: 04/03/2024
-
-BOLSISTAS:
-Nenhum bolsista cadastrado!
-
-===============================
-
-===============================
-BOLSA:
-Tipo: Gandalf
-Valor Mensal: 555.0
-Data de Inicio: 05/06/2026
-Data de Termino: 1309293139/00/0000
-
-BOLSISTAS:
-Nenhum bolsista cadastrado!
-
-===============================
-
-===============================
-BOLSA:
-Tipo: Gollum
-Valor Mensal: 600.0
-Data de Inicio: 04/05/2026
-Data de Termino: 05/05/2026
-
-BOLSISTAS:
-Nenhum bolsista cadastrado!
-
-===============================
-
-===============================
-BOLSA:
-Tipo: Gulang
-Valor Mensal: 456.0
-Data de Inicio: 34/34/3434
-Data de Termino: 00/00/0000
-
-BOLSISTAS:
-Nenhum bolsista cadastrado!
-
-===============================
-
-===============================
-BOLSA:
-Tipo: Socorro
-Valor Mensal: 456.0
-Data de Inicio: 05/04/2026
-Data de Termino: 1096045385/00/0000
-
-BOLSISTAS:
-Nenhum bolsista cadastrado!
-
-===============================
-
-===============================
-BOLSA:
-Tipo: Testequatro
+Tipo: Harry
 Valor Mensal: 345.0
-Data de Inicio: 05/04/2034
-Data de Termino: 1684103968/00/0000
-
-BOLSISTAS:
-Nenhum bolsista cadastrado!
-
-===============================
-
-===============================
-BOLSA:
-Tipo: Testetres
-Valor Mensal: 433.0
-Data de Inicio: 04/05/2024
+Data de Inicio: 00/00/0000
 Data de Termino: 00/00/0000
 
 BOLSISTAS:
@@ -166,9 +12,9 @@ Nenhum bolsista cadastrado!
 
 ===============================
 BOLSA:
-Tipo: Testeum
-Valor Mensal: 450.0
-Data de Inicio: 09/09/2032
+Tipo: Hermione
+Valor Mensal: 345.0
+Data de Inicio: 00/00/0000
 Data de Termino: 00/00/0000
 
 BOLSISTAS:

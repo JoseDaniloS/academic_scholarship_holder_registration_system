@@ -16,6 +16,8 @@ int verifica_cpf_valido(char * cpf);
 
 int verifica_inteiro(char * numero);
 
+int verifica_data(char *data);
+
 int verifica_matricula_valida(char *numero);
 
 float verifica_float(char * numero);

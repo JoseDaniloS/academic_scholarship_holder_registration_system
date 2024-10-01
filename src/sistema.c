@@ -97,6 +97,46 @@ int verifica_inteiro(char *numero)
     return (numero_convertido);
 }
 
+int verifica_data(char *data)
+{
+
+    // verifica se a string está vazia
+    if (data[0] == '\0')
+    {
+        return FALHA;
+    }
+
+    // verifica cada caractere da string se é um digito
+    for (int i = 0; data[i] != '\0'; i++)
+    {
+        if (!isdigit(data[i]) && (i != 2 && i != 5))
+        {
+            return FALHA;
+        }
+    }
+    if (data[2] != ' ' || data[5] != ' ')
+    {
+        return FALHA;
+    }
+
+    int dia, mes, ano;
+    sscanf(data, "%d %d %d", &dia, &mes, &ano);
+    if (dia < 0 || dia > 31)
+    {
+        return FALHA;
+    }
+    if (mes < 0 || mes > 12)
+    {
+        return FALHA;
+    }
+    if (ano < 2024 || ano > 2030)
+    {
+        return FALHA;
+    }
+
+    return SUCESSO;
+}
+
 int verifica_matricula_valida(char *numero)
 {
     if (numero[0] == '\0')
