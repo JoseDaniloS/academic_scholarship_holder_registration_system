@@ -84,7 +84,7 @@ void insere_bolsa(Bolsa **bolsas)
 
     do
     {
-        
+
         printf("Informe a data de inicio\nFormato: DD MM AAAA\n");
         scanf(" %[^\n]", datas);
         verifica_data1 = verifica_data(datas);
@@ -239,16 +239,16 @@ void excluir_bolsas(Bolsa **bolsas)
     while (count != NULL)
     {
 
-        // se encontrar a bolsa
+        
         if (strcmp(count->nome_bolsa, nome_bolsa) == 0)
         {
 
-            // se a bolsa a ser removida seja a primeira
+            
             if (ant == NULL)
             {
                 *bolsas = count->proxima_bolsa;
             }
-            // ser a bolsa a ser removida seja apos a primeira
+            
             else
             {
                 ant->proxima_bolsa = count->proxima_bolsa;
@@ -492,7 +492,6 @@ void consultar_bolsas_disponiveis(Bolsa **bolsas)
     }
 }
 
-// função para listar todos os bolsistas cadastrados em todas as bolsas
 void auxiliar_listar_bolsistas(Bolsa **bolsas)
 {
     Bolsa *count = *bolsas;
@@ -505,10 +504,8 @@ void auxiliar_listar_bolsistas(Bolsa **bolsas)
         printf("Data de Inicio: %02d/%02d/%04d\n", count->inicio.dia, count->inicio.mes, count->inicio.ano);
         printf("Data de Termino: %02d/%02d/%04d\n\n", count->termino.dia, count->termino.mes, count->termino.ano);
 
-        // listar bolsistas da bolsa atual
         listar_bolsistas(count->bolsistas);
 
-        // avancar para proxima bolsa
         count = count->proxima_bolsa;
         contador_de_bolsas++;
     }
@@ -557,7 +554,6 @@ void adiciona_bolsista_na_bolsa(Bolsa **bolsas)
     }
 }
 
-// funçao para escanear todas as bolsas armazenadas no banco de dado
 void ler_bolsa_arquivo(FILE **banco_de_dados, Bolsa **bolsas)
 {
     char linha[MAX_BOLSA];
@@ -636,9 +632,6 @@ void insere_bolsa_arquivo(FILE **banco_de_dados, Bolsa **bolsas)
     }
 }
 
-// terminar função de editar os dados, adiconando a opção de editar por nome ou matricula
-// corrigir o erro do arquivo, possível problema: caminho não encontrado
-
 // função para verificar se a lista de bolsas está vazia
 int bolsa_vazia(Bolsa *bolsas)
 {
@@ -657,10 +650,11 @@ void edita_dados_bolsista(Bolsa **bolsas)
         return;
     }
     char c_numero[2], nome_bolsista[40];
-    int opcao, verificador = FALHA;
+    int opcao, verificador = FALHA, valida_matricula = FALHA;
     Bolsa *count = *bolsas;
     Bolsista *bolsista_encontrado = NULL;
-    long int matricula;
+    char matricula[9];
+    long matricula_convertida;
 
     do
     {
@@ -718,14 +712,18 @@ void edita_dados_bolsista(Bolsa **bolsas)
             }
             break;
         case 2:
-
-            printf("Informe a matricula do bolsista:\n");
-            scanf("%ld", &matricula);
+            do
+            {
+                printf("Informe a matricula do bolsista:\n");
+                scanf(" %[^\n]", matricula);
+                valida_matricula = verifica_matricula_valida(matricula);
+                matricula_convertida = strtol(matricula, NULL, 10);
+            } while (valida_matricula == FALHA);
 
             // Busca pelo bolsista em todas as bolsas
             while (count != NULL)
             {
-                bolsista_encontrado = auxiliar_buscar_bolsista_por_matricula(count->bolsistas, matricula);
+                bolsista_encontrado = auxiliar_buscar_bolsista_por_matricula(count->bolsistas, matricula_convertida);
 
                 // Se o bolsista for encontrado, interrompe a busca
                 if (bolsista_encontrado != NULL)

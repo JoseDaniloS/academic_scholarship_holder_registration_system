@@ -13,7 +13,6 @@ struct bolsista
     struct bolsista *proximo_bolsista;
 };
 
-// função para adicionar um bolsista em uma bolsa disponivel
 void adiciona_bolsista(Bolsista **bolsistas, char *nome_bolsa)
 {
 
@@ -24,7 +23,7 @@ void adiciona_bolsista(Bolsista **bolsistas, char *nome_bolsa)
         exit(1);
     }
     char nome_bolsista[MAX], curso[50], CPF[TAMANHO_CPF + 1];
-    char matricula_bolsista[10];
+    char matricula_bolsista[9];
     long matricula_convertida;
     int verificador = FALHA, verificador2 = FALHA;
 
@@ -70,13 +69,13 @@ void adiciona_bolsista(Bolsista **bolsistas, char *nome_bolsa)
     do
     {
         printf("Informe a Matricula (8 digitos):\n");
-        scanf(" %8[^\n]", matricula_bolsista);
+        scanf(" %[^\n]", matricula_bolsista);
         verificador = verifica_matricula_valida(matricula_bolsista);
         matricula_convertida = strtol(matricula_bolsista, NULL, 10);
         verificador2 = verifica_matricula_existente(matricula_convertida, *bolsistas);
 
         // não deixar que matricula menores ou maiores de 8 digitos passem
-    } while (verificador == FALHA && verificador2 == FALHA);
+    } while (verificador == FALHA || verificador2 == FALHA);
 
     do
     {
@@ -130,7 +129,7 @@ Bolsista *auxiliar_buscar_bolsista_por_nome(Bolsista *bolsistas, char *nome_bols
     // caso não exista nenhum bolsista cadastrado na bolsa
     if (bolsistas == NULL)
     {
-        return bolsistas;
+        return NULL;
     }
 
     // percorre a lista de bolsistas de uma determianda bolsa

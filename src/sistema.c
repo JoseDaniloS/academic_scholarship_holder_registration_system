@@ -154,7 +154,7 @@ int verifica_matricula_valida(char *numero)
     }
     long numero_convertido = strtol(numero, NULL, 10);
 
-    if (!(numero_convertido >= 0 && numero_convertido <= 99999999))
+    if (numero_convertido < 10000000 || numero_convertido > 99999999)
     {
         return FALHA;
     }
