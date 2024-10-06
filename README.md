@@ -358,5 +358,5 @@ Sistema de Cadastros de Bolsistas Acadêmicos
 ```
 > ## Desenvolvedores
 
-| [<img loading="lazy" src="https://avatars.githubusercontent.com/u/106347376?v=4" width=115><br><sub>Alice dos Santos Pinheiro</sub>](https://github.com/AliceSantoi) |  [<img loading="lazy" src="https://avatars.githubusercontent.com/u/154340363?v=4" width=115><br><sub>Jose Danilo Santos do Nascimento</sub>](https://github.com/guilhermeonrails) |  
+| [<img loading="lazy" src="https://avatars.githubusercontent.com/u/106347376?v=4" width=115><br><sub>Alice dos Santos Pinheiro</sub>](https://github.com/AliceSantoi) |  [<img loading="lazy" src="https://avatars.githubusercontent.com/u/154340363?v=4" width=115><br><sub>Jose Danilo Santos do Nascimento</sub>](https://github.com/JoseDaniloS) |  
 | :---: | :---: 
