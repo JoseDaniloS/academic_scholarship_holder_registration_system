@@ -65,7 +65,7 @@ Bolsista 1 -> Bolsista 2 -> NULL
 **Tipos estruturados**
 
 > **Struct Bolsa**
-```
+```c
 struct bolsa
 {
     char nome_bolsa[MAX_BOLSA];
@@ -80,7 +80,7 @@ struct bolsa
 <br>
 
 > **Struct bolsista**
-```
+```c
 struct bolsista
 {
     char nome_completo[MAX];
@@ -104,7 +104,7 @@ Bolsa
 
 > **bolsas.h**
 
-```
+```c
 #ifndef BOLSA_H
 #define BOLSA_H
 
@@ -197,7 +197,7 @@ void edita_dados_bolsista(Bolsa **bolsas);
 
 > **bolsistas.h**
 
-```
+```c
 #ifndef BOLSISTA_H
 #define BOLSISTA_H
 
@@ -272,7 +272,7 @@ void insere_bolsista_arquivo(FILE **banco_de_dados, Bolsista *bolsistas);
 <br>
 
 > **sistema.h**
-```
+```c
 #ifndef SISTEMA_H
 #define SISTEMA_H
 
