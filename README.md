@@ -15,16 +15,16 @@
 
 ***
 
-> ## Introdução
+## Introdução
 
 Projeto desenvolvido em C para o cadastro de bolsas e bolsistas
 acadêmicos que permite o gerenciamento eficiente de informações sobre os beneficiários. O sistema possibilita o registro, busca, edição, consulta, listagem e exclusão de dados dos bolsistas e das recpectivas bolsas. 
 
-> ## Problematica
+## Problematica
 
 A necessidade de um sistema de cadastro de bolsistas acadêmicos surge de uma série de problemas e desafios ao gerenciar programas de bolsas de estudo. Esses desafios criam um ambiente em que o gerenciamento manual se torna ineficaz.
 
-> ## Executar projeto
+## Executar projeto
 
 - 1º  clone o repositório do projeto:<br>
 
@@ -35,7 +35,7 @@ git clone github.com/classroom-ufersa/academic_scholarship_holder_registration_s
 ```c
 gcc -o main main.c ../src/bolsas.c ../src/bolsistas.c ../src/sistema.c  
 ```
-> ## Funcionalidades
+## Funcionalidades
 
 | Menu                                     | Status |
 |--------------------------------------------|--------|
@@ -49,7 +49,7 @@ gcc -o main main.c ../src/bolsas.c ../src/bolsistas.c ../src/sistema.c
 | [ 8 ] - Consultar Bolsas Disponiveis                                       | ✔      
 [ 9 ] - Sair                                       | ✔  
 
-> ## Desenvolvimento<br>
+## Desenvolvimento<br>
 **Listas encadeadas**
 - Para o desenvolvimento do projeto foram utilizadas listas encadeadas simples onde cada nó guarda informações de uma bolsa e aponta para a próxima. Além disso, cada bolsa pode ter uma lista de bolsistas, formando uma relação entre si. 
 
@@ -332,7 +332,7 @@ char * transforma_caracter_padrao(char * nome);
 
 ```
 ***
-> ## Estrutura do repositorio
+## Estrutura do repositorio
 ```
 Sistema de Cadastros de Bolsistas Acadêmicos
 |
@@ -356,7 +356,7 @@ Sistema de Cadastros de Bolsistas Acadêmicos
     └── sistema.c
 
 ```
-> ## Desenvolvedores
+## Desenvolvedores
 
 | [<img loading="lazy" src="https://avatars.githubusercontent.com/u/106347376?v=4" width=115><br><sub>Alice dos Santos Pinheiro</sub>](https://github.com/AliceSantoi) |  [<img loading="lazy" src="https://avatars.githubusercontent.com/u/154340363?v=4" width=115><br><sub>Jose Danilo Santos do Nascimento</sub>](https://github.com/JoseDaniloS) |  
 | :---: | :---: 
