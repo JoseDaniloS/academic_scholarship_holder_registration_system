@@ -1,17 +1,14 @@
 # Sistema de cadastros de bolsistas acadêmicos.
 
 ## Sumário:
-* [Introdução](#Introdução)
 
-* [Problematica](#Problematica)
-
-* [Executar projeto](#Executar-projeto)
-
-* [Funcionalidades](#Funcionalidades)
-
-* [Desenvolvimento](#Desenvolvimento)
-
-* [Estrutura do repositorio](#Estrutura-do-repositorio)
+  - [Introdução](#introdução)
+  - [Problemática](#problemática)
+  - [Executar projeto](#executar-projeto)
+  - [Funcionalidades](#funcionalidades)
+  - [Desenvolvimento](#desenvolvimento)
+  - [Estrutura do repositorio](#estrutura-do-repositorio)
+  - [Desenvolvedores](#desenvolvedores)
 
 ***
 
@@ -20,7 +17,7 @@
 Projeto desenvolvido em C para o cadastro de bolsas e bolsistas
 acadêmicos que permite o gerenciamento eficiente de informações sobre os beneficiários. O sistema possibilita o registro, busca, edição, consulta, listagem e exclusão de dados dos bolsistas e das recpectivas bolsas. 
 
-## Problematica
+## Problemática
 
 A necessidade de um sistema de cadastro de bolsistas acadêmicos surge de uma série de problemas e desafios ao gerenciar programas de bolsas de estudo. Esses desafios criam um ambiente em que o gerenciamento manual se torna ineficaz.
 
@@ -37,17 +34,17 @@ gcc -o main main.c ../src/bolsas.c ../src/bolsistas.c ../src/sistema.c
 ```
 ## Funcionalidades
 
-| Menu                                     | Status |
-|--------------------------------------------|--------|
-| [ 1 ] - Adicionar Bolsa                      | ✔      |
-| [ 2 ] - Adicionar Bolsista                        | ✔      |
-| [ 3 ] - Excluir Bolsista                         | ✔      |
-| [ 4 ] - Excluir Bolsa                           | ✔      |
+| Menu                                 | Status |
+| ------------------------------------ | ------ |
+| [ 1 ] - Adicionar Bolsa              | ✔      |
+| [ 2 ] - Adicionar Bolsista           | ✔      |
+| [ 3 ] - Excluir Bolsista             | ✔      |
+| [ 4 ] - Excluir Bolsa                | ✔      |
 | [ 5 ] - Listar Bolsistas             | ✔      |
-| [ 6 ] - Buscar Bolsista                   | ✔      |
-| [ 7 ] - Editar Dados do Bolsista  | ✔      |
-| [ 8 ] - Consultar Bolsas Disponiveis                                       | ✔      
-[ 9 ] - Sair                                       | ✔  
+| [ 6 ] - Buscar Bolsista              | ✔      |
+| [ 7 ] - Editar Dados do Bolsista     | ✔      |
+| [ 8 ] - Consultar Bolsas Disponiveis | ✔      |
+| [ 9 ] - Sair                         | ✔      |
 
 ## Desenvolvimento<br>
 **Listas encadeadas**
@@ -64,6 +61,15 @@ Bolsista 1 -> Bolsista 2 -> NULL
 
 **Tipos estruturados**
 
+>**struct Data**
+```c
+struct data
+{
+    int dia;
+    int mes;
+    int ano;
+};
+```
 > **Struct Bolsa**
 ```c
 struct bolsa
@@ -358,5 +364,5 @@ Sistema de Cadastros de Bolsistas Acadêmicos
 ```
 ## Desenvolvedores
 
-| [<img loading="lazy" src="https://avatars.githubusercontent.com/u/106347376?v=4" width=115><br><sub>Alice dos Santos Pinheiro</sub>](https://github.com/AliceSantoi) |  [<img loading="lazy" src="https://avatars.githubusercontent.com/u/154340363?v=4" width=115><br><sub>Jose Danilo Santos do Nascimento</sub>](https://github.com/JoseDaniloS) |  
-| :---: | :---: 
+| [<img loading="lazy" src="https://avatars.githubusercontent.com/u/106347376?v=4" width=115><br><sub>Alice dos Santos Pinheiro</sub>](https://github.com/AliceSantoi) | [<img loading="lazy" src="https://avatars.githubusercontent.com/u/154340363?v=4" width=115><br><sub>Jose Danilo Santos do Nascimento</sub>](https://github.com/JoseDaniloS) |
+| :------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
