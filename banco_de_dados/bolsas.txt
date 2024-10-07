@@ -12,6 +12,18 @@ Nenhum bolsista cadastrado!
 
 ===============================
 BOLSA:
+Tipo: Beliche 
+Valor Mensal: 456.0
+Data de Inicio: 23/06/2024
+Data de Termino: 23/05/2028
+
+BOLSISTAS:
+Nenhum bolsista cadastrado!
+
+===============================
+
+===============================
+BOLSA:
 Tipo: Ti
 Valor Mensal: 457.0
 Data de Inicio: 05/06/2025

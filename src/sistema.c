@@ -247,3 +247,10 @@ char *transforma_caracter_padrao(char *nome)
 
     return nome;
 }
+
+void limparBuffer(){
+ 
+   int c;
+   while((c = getchar()) != '\n' && c != EOF);
+ 
+}

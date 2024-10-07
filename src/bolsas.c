@@ -266,6 +266,7 @@ void excluir_bolsas(Bolsa **bolsas)
 
 // função para excluir um bolsista de uma bolsa
 void excluir_bolsista_por_nome(Bolsa **bolsas)
+
 {
 
     // verifica se a bolsa esta vazia
@@ -525,7 +526,7 @@ void adiciona_bolsista_na_bolsa(Bolsa **bolsas)
     {
         printf("Informe a Bolsa que o Aluno vai ser Vinculado:\n");
         scanf(" %[^\n]", nome_bolsa);
-        fflush(stdin); // limpa buffer
+        limparBuffer();
         if (strlen(nome_bolsa) >= MAX_BOLSA)
         {
             printf("Nome muito grande! Digite Novamente.\n");
