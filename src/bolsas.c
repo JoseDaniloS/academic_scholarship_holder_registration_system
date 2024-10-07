@@ -137,12 +137,12 @@ int verifica_data_termino(Data inicio, Data termino)
         {
             return FALHA;
         }
-    }
-    else if (inicio.mes == termino.mes)
-    {
-        if (inicio.dia > termino.dia)
+        else if (inicio.mes == termino.mes)
         {
-            return FALHA;
+            if (inicio.dia > termino.dia)
+            {
+                return FALHA;
+            }
         }
     }
 
@@ -239,16 +239,14 @@ void excluir_bolsas(Bolsa **bolsas)
     while (count != NULL)
     {
 
-        
         if (strcmp(count->nome_bolsa, nome_bolsa) == 0)
         {
 
-            
             if (ant == NULL)
             {
                 *bolsas = count->proxima_bolsa;
             }
-            
+
             else
             {
                 ant->proxima_bolsa = count->proxima_bolsa;

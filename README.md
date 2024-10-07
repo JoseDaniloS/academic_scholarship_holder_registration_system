@@ -28,9 +28,13 @@ A necessidade de um sistema de cadastro de bolsistas acadêmicos surge de uma s�
 ```c
 git clone github.com/classroom-ufersa/academic_scholarship_holder_registration_system.git
 ```
-- 2º execute o programa:<br>
+- 2º compile:<br>
 ```c
 gcc -o main main.c ../src/bolsas.c ../src/bolsistas.c ../src/sistema.c  
+```
+- 3º execute o programa:<br>
+```c
+./main  
 ```
 ## Funcionalidades
 

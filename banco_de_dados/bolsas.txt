@@ -10,3 +10,15 @@ Nenhum bolsista cadastrado!
 
 ===============================
 
+===============================
+BOLSA:
+Tipo: Ti
+Valor Mensal: 457.0
+Data de Inicio: 05/06/2025
+Data de Termino: 05/06/2026
+
+BOLSISTAS:
+Nenhum bolsista cadastrado!
+
+===============================
+
