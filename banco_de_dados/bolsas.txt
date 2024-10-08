@@ -18,7 +18,11 @@ Data de Inicio: 05/06/2025
 Data de Termino: 05/06/2026
 
 BOLSISTAS:
-Nenhum bolsista cadastrado!
+Bolsista: Alice
+Matricula: 12345678
+Curso: 51
+CPF: 042.004.773-51
+Bolsa Associada: Ti
 
 ===============================
 

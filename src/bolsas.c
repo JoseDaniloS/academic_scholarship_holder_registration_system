@@ -50,7 +50,6 @@ void insere_bolsa(Bolsa **bolsas)
             verificador = verifica_caracter(nome_bolsa);
             transforma_caracter_padrao(nome_bolsa);
             verificador2 = verifica_bolsa_existente(*bolsas, nome_bolsa);
-
         }
 
     } while (verificador == FALHA || verificador2 == FALHA);
@@ -388,7 +387,7 @@ void buscar_bolsista_por_nome(Bolsa **bolsas)
     {
         printf("Informe o nome do Bolsista:\n");
         scanf(" %[^\n]", nome_bolsista);
-        fflush(stdin);
+        limpaBuffer();
         if (strlen(nome_bolsista) >= MAX)
         {
             printf("Nome muito grande!Digite Novamente.\n");
@@ -415,6 +414,9 @@ void buscar_bolsista_por_nome(Bolsa **bolsas)
 void buscar_bolsista_por_matricula(Bolsa **bolsas)
 {
     Bolsa *count = *bolsas;
+    char matricula[9];
+    int valida_matricula1, valida_matricula2;
+    long int matricula_validada;
 
     if (bolsa_vazia(*bolsas) == FALHA)
     {
@@ -422,14 +424,20 @@ void buscar_bolsista_por_matricula(Bolsa **bolsas)
         return;
     }
 
-    long int matricula;
+    do
+    {
+        printf("Informe a matricula do bolsista (8 digitos): ");
+        scanf(" %8[^\n]", matricula);
+        valida_matricula1 = verifica_matricula_valida(matricula);
+        matricula_validada = strtol(matricula, NULL, 10);
+        valida_matricula2 = verifica_matricula_existente(matricula_validada, count->bolsistas);
+    } while (valida_matricula1 == FALHA || valida_matricula2 == FALHA);
+
     Bolsista *bolsista_encontrado = NULL;
-    printf("Informe a matricula do bolsista: ");
-    scanf("%ld", &matricula);
 
     while (count != NULL)
     {
-        bolsista_encontrado = auxiliar_buscar_bolsista_por_matricula(count->bolsistas, matricula);
+        bolsista_encontrado = auxiliar_buscar_bolsista_por_matricula(count->bolsistas, matricula_validada);
         count = count->proxima_bolsa;
     }
 
