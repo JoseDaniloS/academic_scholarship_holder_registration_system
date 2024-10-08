@@ -63,7 +63,7 @@ Bolsa 1 pode ter uma lista de bolsistas associados:
 Bolsista 1 -> Bolsista 2 -> NULL
 ```
 
-**Tipos estruturados**
+**TAD's-(Tipos Abstratos de Dados)**
 
 >**struct Data**
 ```c
@@ -101,11 +101,7 @@ struct bolsista
     struct bolsista *proximo_bolsista;
 };
 ```
-**TAD (Tipo Abstrato de Dado)**
-
-- Foram utilizadas 3 TADs para melhorar a organização, manutenção e eficiência do código.
-
-**Hierarquia**
+**Hierarquia dos cabeçalhos**
 ```
 Bolsa
  └── Bolsista
