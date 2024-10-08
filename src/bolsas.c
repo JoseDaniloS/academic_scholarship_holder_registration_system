@@ -526,7 +526,6 @@ void adiciona_bolsista_na_bolsa(Bolsa **bolsas)
     {
         printf("Informe a Bolsa que o Aluno vai ser Vinculado:\n");
         scanf(" %[^\n]", nome_bolsa);
-        limparBuffer();
         if (strlen(nome_bolsa) >= MAX_BOLSA)
         {
             printf("Nome muito grande! Digite Novamente.\n");
