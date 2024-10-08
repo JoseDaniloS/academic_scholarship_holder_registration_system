@@ -199,6 +199,9 @@ int bolsa_vazia(Bolsa *bolsas);
 Recebe com parâmetro um ponteiro duplo de Bolsa*/
 void edita_dados_bolsista(Bolsa **bolsas);
 
+/*Função para limpar Buffer*/
+void limpaBuffer(void);
+
 #endif // BOLSA_H
 
 ```
