@@ -51,5 +51,6 @@ int verifica_caracter(char * nome);
 Recebe como parâmetro uma string contendo o nome digitado*/
 char * transforma_caracter_padrao(char * nome);
 
-
+/*Função para limpar Buffer*/
+void limpaBuffer(void);
 #endif // SYSTEM_H

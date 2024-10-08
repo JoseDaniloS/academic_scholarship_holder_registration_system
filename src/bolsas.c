@@ -39,7 +39,7 @@ void insere_bolsa(Bolsa **bolsas)
 
         printf("Informe o nome da bolsa:\n");
         scanf(" %[^\n]", nome_bolsa);
-        fflush(stdin);
+        limpaBuffer();
         if (strlen(nome_bolsa) >= MAX_BOLSA)
         {
             printf("Nome muito grande!Digite Novamente.\n");
@@ -50,6 +50,7 @@ void insere_bolsa(Bolsa **bolsas)
             verificador = verifica_caracter(nome_bolsa);
             transforma_caracter_padrao(nome_bolsa);
             verificador2 = verifica_bolsa_existente(*bolsas, nome_bolsa);
+
         }
 
     } while (verificador == FALHA || verificador2 == FALHA);
@@ -221,7 +222,7 @@ void excluir_bolsas(Bolsa **bolsas)
     {
         printf("Informe o nome da Bolsa:\n");
         scanf(" %[^\n]", nome_bolsa);
-        fflush(stdin);
+        limpaBuffer();
         if (strlen(nome_bolsa) >= MAX_BOLSA)
         {
             printf("Nome muito grande!Digite Novamente.\n");
@@ -280,7 +281,7 @@ void excluir_bolsista_por_nome(Bolsa **bolsas)
     {
         printf("Informe o nome do bolsista:\n");
         scanf(" %[^\n]", nome_bolsista);
-        fflush(stdin);
+        limpaBuffer();
         if (strlen(nome_bolsista) >= MAX)
         {
             printf("Nome muito grande!Digite novamente.\n");
@@ -526,7 +527,8 @@ void adiciona_bolsista_na_bolsa(Bolsa **bolsas)
     {
         printf("Informe a Bolsa que o Aluno vai ser Vinculado:\n");
         scanf(" %[^\n]", nome_bolsa);
-        if (strlen(nome_bolsa) >= MAX_BOLSA)
+        fflush(stdin);
+        if (strlen(nome_bolsa) >= MAX_BOLSA - 1)
         {
             printf("Nome muito grande! Digite Novamente.\n");
             verificador = FALHA;
@@ -671,7 +673,7 @@ void edita_dados_bolsista(Bolsa **bolsas)
             {
                 printf("Informe o nome do Bolsista:\n");
                 scanf(" %[^\n]", nome_bolsista);
-                fflush(stdin);
+                limpaBuffer();
 
                 if (strlen(nome_bolsista) >= MAX)
                 {
